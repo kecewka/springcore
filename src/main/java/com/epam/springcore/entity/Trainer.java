@@ -1,23 +1,27 @@
 package com.epam.springcore.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "trainers")
-public class Trainer {
+public class Trainer extends User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String specialization;
-    private Long user_id;
+    private TrainingType specialization;
+    private List<Training> trainings;
+    private List<Trainee> trainees;
 
     public Trainer() {
     }
 
-    public Trainer(Long id, String specialization, Long user_id) {
+    public Trainer(Long id, TrainingType specialization, List<Training> trainings, List<Trainee> trainees) {
         this.id = id;
         this.specialization = specialization;
-        this.user_id = user_id;
+        this.trainings = trainings;
+        this.trainees = trainees;
+
     }
 
     public Long getId() {
@@ -28,28 +32,37 @@ public class Trainer {
         this.id = id;
     }
 
-    public String getSpecialization() {
+    public TrainingType getSpecialization() {
         return specialization;
     }
 
-    public void setSpecialization(String specialization) {
+    public void setSpecialization(TrainingType specialization) {
         this.specialization = specialization;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public List<Training> getTrainings() {
+        return trainings;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setTrainings(List<Training> trainings) {
+        this.trainings = trainings;
+    }
+
+    public List<Trainee> getTrainees() {
+        return trainees;
+    }
+
+    public void setTrainees(List<Trainee> trainees) {
+        this.trainees = trainees;
     }
 
     @Override
     public String toString() {
         return "Trainer{" +
                 "id=" + id +
-                ", specialization='" + specialization + '\'' +
-                ", user_id=" + user_id +
+                ", specialization=" + specialization +
+                ", trainings=" + trainings +
+                ", trainees=" + trainees +
                 '}';
     }
 }
