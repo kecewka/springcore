@@ -6,22 +6,24 @@ import java.util.List;
 
 @Entity
 @Table(name = "trainees")
-public class Trainee extends User{
+public class Trainee{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate dateOfBirth;
     private String address;
+    private User user;
     private List<Training> trainings;
     private List<Trainer> trainers;
 
     public Trainee() {
     }
 
-    public Trainee(Long id, LocalDate dateOfBirth, String address, List<Training> trainings, List<Trainer> trainers) {
+    public Trainee(Long id, LocalDate dateOfBirth, String address, User user, List<Training> trainings, List<Trainer> trainers) {
         this.id = id;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
+        this.user = user;
         this.trainings = trainings;
         this.trainers = trainers;
     }
@@ -50,6 +52,14 @@ public class Trainee extends User{
         this.address = address;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public List<Training> getTrainings() {
         return trainings;
     }
@@ -72,6 +82,7 @@ public class Trainee extends User{
                 "id=" + id +
                 ", dateOfBirth=" + dateOfBirth +
                 ", address='" + address + '\'' +
+                ", user=" + user +
                 ", trainings=" + trainings +
                 ", trainers=" + trainers +
                 '}';

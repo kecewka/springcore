@@ -5,10 +5,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "trainers")
-public class Trainer extends User{
+public class Trainer{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private User user;
     private TrainingType specialization;
     private List<Training> trainings;
     private List<Trainee> trainees;
@@ -16,9 +17,10 @@ public class Trainer extends User{
     public Trainer() {
     }
 
-    public Trainer(Long id, TrainingType specialization, List<Training> trainings, List<Trainee> trainees) {
+    public Trainer(Long id, TrainingType specialization, User user, List<Training> trainings, List<Trainee> trainees) {
         this.id = id;
         this.specialization = specialization;
+        this.user = user;
         this.trainings = trainings;
         this.trainees = trainees;
 
@@ -38,6 +40,14 @@ public class Trainer extends User{
 
     public void setSpecialization(TrainingType specialization) {
         this.specialization = specialization;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Training> getTrainings() {
@@ -61,6 +71,7 @@ public class Trainer extends User{
         return "Trainer{" +
                 "id=" + id +
                 ", specialization=" + specialization +
+                ", user=" + user +
                 ", trainings=" + trainings +
                 ", trainees=" + trainees +
                 '}';
