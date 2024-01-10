@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.getUserById(id);
+        return userRepository.findById(id);
     }
 
     @Override
@@ -35,12 +35,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User user) {
+        String username = generateUsername(user.getFirstName(), user.getLastName());
+        String password = generatePassword();
+        user.setUsername(username);
+        user.setPassword(password);
         userRepository.saveUser(user);
     }
 
     @Override
     public void updateUser(User user) {
-        userRepository.saveUser(user);
+        userRepository.updateUser(user);
     }
 
     @Override
@@ -68,7 +72,7 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        return generatedUsername; // Return the original username if it's free
+        return generatedUsername;
     }
 
     public String generatePassword() {

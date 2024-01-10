@@ -8,9 +8,10 @@ import java.util.List;
 @Repository
 public interface UserRepository {
     List<User> findAll();
-    User getUserById(Long id);
+    User findById(Long id);
     User getUserByUsername(String username);
-    void saveUser(User user);
+    boolean saveUser(User user);
+    void updateUser(User user);
     void deleteUser(Long id);
     boolean usernameExists(String username);
 
