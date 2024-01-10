@@ -29,7 +29,7 @@ public class UserRepositoryImpl implements UserRepository {
         String query = "select * from users";
         try (Connection connection = basicDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Long id = rs.getLong("id");
                 String firstName = rs.getString("first_name");
@@ -54,7 +54,7 @@ public class UserRepositoryImpl implements UserRepository {
         try (Connection connection = basicDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 user.setId(rs.getLong("id"));
                 user.setFirstName(rs.getString("first_name"));
@@ -76,7 +76,7 @@ public class UserRepositoryImpl implements UserRepository {
         try (Connection connection = basicDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 user.setId(rs.getLong("id"));
                 user.setFirstName(rs.getString("first_name"));

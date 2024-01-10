@@ -33,7 +33,7 @@ public class TrainingRepositoryImpl implements TrainingRepository {
                 "join training_types ty on t.training_type_id = try.id";
         try (Connection connection = basicDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Trainee trainee = new Trainee();
                 trainee.setId(rs.getLong("tr.id"));
@@ -76,7 +76,7 @@ public class TrainingRepositoryImpl implements TrainingRepository {
         try (Connection connection = basicDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Trainee trainee = new Trainee();
                 trainee.setId(rs.getLong("tr.id"));

@@ -1,9 +1,10 @@
 /* Delete tables clean schema */
-drop if exists users;
-drop if exists trainees;
-drop if exists training_types;
-drop if exists trainers;
-drop if exists trainings;
+drop table if exists trainings;
+drop table if exists trainers;
+drop table if exists training_types;
+drop table if exists trainees;
+drop table if exists users;
+
 
 /* Create tables */
 CREATE TABLE users (
@@ -34,7 +35,7 @@ create table trainers (
     specialization int,
     user_id int,
     constraint fk_user foreign key (user_id) references users(id),
-    constraint fk_specialization foreign (specialization) references training_types(id)
+    constraint fk_specialization foreign key (specialization) references training_types(id)
 );
 
 create table trainings (
@@ -52,7 +53,7 @@ create table trainings (
 
 /* populate tables */
 /* users */
-INSERT INTO users (name, surname, username, password, is_active) VALUES
+INSERT INTO users (first_name, last_name, username, password, is_active) VALUES
   ('John', 'Doe', 'john.doe', 'SecurePass1', true),
   ('Jane', 'Smith', 'jane.smith', 'StrongPwd123', true),
   ('Alice', 'Johnson', 'alice.johnson', 'Passw0rd123!', true),

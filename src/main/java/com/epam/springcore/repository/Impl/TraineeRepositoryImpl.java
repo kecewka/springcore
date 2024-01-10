@@ -30,7 +30,7 @@ public class TraineeRepositoryImpl implements TraineeRepository {
                 "join users u on tr.user_id = u.id";
         try (Connection connection = basicDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getLong("u.id"));
@@ -65,7 +65,7 @@ public class TraineeRepositoryImpl implements TraineeRepository {
         try (Connection connection = basicDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getLong("u.id"));
