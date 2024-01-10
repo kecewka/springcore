@@ -6,8 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.sql.DataSource;
 
 /*import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -22,6 +27,11 @@ public class DatabaseConfig {
 
     private Environment environment;
 
+    @Autowired
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
+
     @Bean
     public BasicDataSource basicDataSource() {
         BasicDataSource basicDataSource = new BasicDataSource();
@@ -31,12 +41,25 @@ public class DatabaseConfig {
         basicDataSource.setPassword(environment.getProperty("jdbc.password"));
         return basicDataSource;
     }
-    @Autowired
-    public void setEnvironment(Environment environment) {
-        this.environment = environment;
+
+    @Bean
+    public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
+        DataSourceInitializer initializer = new DataSourceInitializer();
+        initializer.setDataSource(dataSource);
+
+        // Specify the path to your SQL file from application.properties
+        String dataFilePath = environment.getProperty("data.file.path");
+
+        // Create a ResourceDatabasePopulator and set the SQL script location
+        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+        databasePopulator.addScript(new ClassPathResource(dataFilePath));
+
+        // Set the ResourceDatabasePopulator to the DataSourceInitializer
+        initializer.setDatabasePopulator(databasePopulator);
+        return initializer;
     }
 
-    /* @Bean
+        /* @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(basicDataSource());

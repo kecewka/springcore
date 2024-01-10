@@ -7,6 +7,7 @@ import com.epam.springcore.entity.User;
 import com.epam.springcore.repository.TrainerRepository;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class TrainerRepositoryImpl implements TrainerRepository {
 
     private final BasicDataSource basicDataSource;

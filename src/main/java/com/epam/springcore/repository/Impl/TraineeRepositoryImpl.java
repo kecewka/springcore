@@ -7,11 +7,13 @@ import com.epam.springcore.entity.User;
 import com.epam.springcore.repository.TraineeRepository;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class TraineeRepositoryImpl implements TraineeRepository {
 
     private final BasicDataSource basicDataSource;

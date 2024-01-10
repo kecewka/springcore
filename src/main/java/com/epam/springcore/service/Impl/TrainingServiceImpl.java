@@ -4,11 +4,14 @@ import com.epam.springcore.entity.Training;
 import com.epam.springcore.repository.TrainingRepository;
 import com.epam.springcore.service.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TrainingServiceImpl implements TrainingService {
     private final TrainingRepository trainingRepository;
+
     @Autowired
     public TrainingServiceImpl(TrainingRepository trainingRepository) {
         this.trainingRepository = trainingRepository;
