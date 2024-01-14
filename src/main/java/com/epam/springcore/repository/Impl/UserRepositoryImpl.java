@@ -3,6 +3,8 @@ package com.epam.springcore.repository.Impl;
 import com.epam.springcore.entity.User;
 import com.epam.springcore.repository.UserRepository;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +19,7 @@ import java.util.List;
 public class UserRepositoryImpl implements UserRepository {
 
     private final BasicDataSource basicDataSource;
+    private static final Logger logger = LogManager.getLogger(UserRepositoryImpl.class);
 
     @Autowired
     public UserRepositoryImpl(BasicDataSource basicDataSource) {
@@ -25,6 +28,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
+
+        logger.info("Accessing database to find all users");
+
         List<User> users = new ArrayList<>();
         String query = "select * from users";
         try (Connection connection = basicDataSource.getConnection();
@@ -36,7 +42,7 @@ public class UserRepositoryImpl implements UserRepository {
                 String lastName = rs.getString("last_name");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                Boolean isActive = rs.getBoolean("is_active");
+                boolean isActive = rs.getBoolean("is_active");
                 User user = new User(id, firstName, lastName, username, password, isActive);
                 users.add(user);
             }
@@ -49,6 +55,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findById(Long id) {
+
+        logger.info("Accessing database to find a user with id: {}", id);
+
         User user = new User();
         String query = "select * from users where id = ?";
         try (Connection connection = basicDataSource.getConnection();
@@ -71,6 +80,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getUserByUsername(String username) {
+
+        logger.info("Accessing database to find a user with username: {}", username);
+
         User user = new User();
         String query = "select * from users where id = ?";
         try (Connection connection = basicDataSource.getConnection();
@@ -93,6 +105,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public boolean saveUser(User user) {
+
+        logger.info("Adding user to the database");
+
         String query = "insert into users (first_name, last_name, username, password, is_active) values (?,?,?,?,?)";
         try (Connection connection = basicDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -110,6 +125,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void updateUser(User user) {
+
+        logger.info("updating a training in a database");
+
         String query = "update users set first_name = ?, last_name = ?, username = ?, password = ?, is_active = ? where id = ?";
         try (Connection connection = basicDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -128,6 +146,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void deleteUser(Long id) {
+
+        logger.info("deleting a trainee with id: {} from database", id);
+
         String query = "delete from users where id = ?";
         try (Connection connection = basicDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -140,6 +161,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public boolean usernameExists(String username) {
+
+        logger.info("checking if user with username: {} exists", username);
+
         String query = "SELECT COUNT(*) AS count FROM users WHERE username = ?";
         try (Connection connection = basicDataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
