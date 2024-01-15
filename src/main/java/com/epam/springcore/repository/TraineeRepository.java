@@ -1,6 +1,7 @@
 package com.epam.springcore.repository;
 
 import com.epam.springcore.entity.Trainee;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

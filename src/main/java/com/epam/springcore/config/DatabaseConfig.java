@@ -47,14 +47,11 @@ public class DatabaseConfig {
         DataSourceInitializer initializer = new DataSourceInitializer();
         initializer.setDataSource(dataSource);
 
-        // Specify the path to your SQL file from application.properties
         String dataFilePath = environment.getProperty("data.file.path");
 
-        // Create a ResourceDatabasePopulator and set the SQL script location
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
         databasePopulator.addScript(new ClassPathResource(dataFilePath));
 
-        // Set the ResourceDatabasePopulator to the DataSourceInitializer
         initializer.setDatabasePopulator(databasePopulator);
         return initializer;
     }
