@@ -16,7 +16,7 @@ public class TraineeServiceImpl implements TraineeService {
 
     private final TraineeRepository traineeRepository;
     private final UserService userService;
-    private static final Logger logger = LogManager.getLogger(TraineeServiceImpl.class);
+    private static final Logger LOGGER = LogManager.getLogger(TraineeServiceImpl.class);
 
     @Autowired
     public TraineeServiceImpl(TraineeRepository traineeRepository, UserService userService) {
@@ -26,32 +26,32 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Override
     public List<Trainee> getAllTrainees() {
-        logger.info("Getting all trainees");
+        LOGGER.info("Getting all trainees");
         return traineeRepository.findAll();
     }
 
     @Override
     public Trainee findTraineeById(Long id) {
-        logger.info("Finding trainee with ID: {}", id);
+        LOGGER.info("Finding trainee with ID: {}", id);
         return traineeRepository.findById(id);
     }
 
     @Override
     public void createTrainee(Trainee trainee) {
-        logger.info("Creating trainee: {}", trainee);
+        LOGGER.info("Creating trainee: {}", trainee);
         userService.createUser(trainee.getUser());
         traineeRepository.createTrainee(trainee);
     }
 
     @Override
     public void updateTrainee(Trainee trainee) {
-        logger.info("Updating trainee: {}", trainee);
+        LOGGER.info("Updating trainee: {}", trainee);
         traineeRepository.updateTrainee(trainee);
     }
 
     @Override
     public void deleteTrainee(Long id) {
-        logger.info("Deleting trainee with ID: {}", id);
+        LOGGER.info("Deleting trainee with ID: {}", id);
         traineeRepository.deleteTrainee(id);
     }
 }

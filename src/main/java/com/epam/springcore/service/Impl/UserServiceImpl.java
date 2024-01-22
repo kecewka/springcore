@@ -15,32 +15,33 @@ import java.util.Random;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
+    private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
+
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     public List<User> getAllUsers() {
-        logger.info("Getting all users");
+        LOGGER.info("Getting all users");
         return userRepository.findAll();
     }
 
     @Override
     public User getUserById(Long id) {
-        logger.info("Finding user with ID: {}", id);
+        LOGGER.info("Finding user with ID: {}", id);
         return userRepository.findById(id);
     }
 
     @Override
     public User getUserByUsername(String username) {
-        logger.info("Finding user with username: {}", username);
+        LOGGER.info("Finding user with username: {}", username);
         return userRepository.getUserByUsername(username);
     }
 
     @Override
     public void createUser(User user) {
-        logger.info("Creating user: {}", user);
+        LOGGER.info("Creating user: {}", user);
         String username = generateUsername(user.getFirstName(), user.getLastName());
         String password = generatePassword();
         user.setUsername(username);
@@ -50,24 +51,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        logger.info("Updating user: {}", user);
+        LOGGER.info("Updating user: {}", user);
         userRepository.updateUser(user);
     }
 
     @Override
     public void deleteUser(Long id) {
-        logger.info("Deleting user with ID: {}", id);
+        LOGGER.info("Deleting user with ID: {}", id);
         userRepository.deleteUser(id);
     }
 
     @Override
     public boolean usernameExists(String username) {
-        logger.info("Checking the existence of username: {}", username);
+        LOGGER.info("Checking the existence of username: {}", username);
         return userRepository.usernameExists(username);
     }
 
     public String generateUsername(String firstName, String lastName) {
-        logger.info("Generating username");
+        LOGGER.info("Generating username");
         String baseUsername = firstName.toLowerCase() + "." + lastName.toLowerCase();
         String generatedUsername = baseUsername;
 
@@ -81,12 +82,12 @@ public class UserServiceImpl implements UserService {
                 index++;
             }
         }
-        logger.info("Username has been generated");
+        LOGGER.info("Username has been generated");
         return generatedUsername;
     }
 
     public String generatePassword() {
-        logger.info("Generating password");
+        LOGGER.info("Generating password");
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567980";
         StringBuilder builder = new StringBuilder(10);
         Random random = new Random();
@@ -95,7 +96,7 @@ public class UserServiceImpl implements UserService {
             char randomChar = chars.charAt(randomIndex);
             builder.append(randomChar);
         }
-        logger.info("Password has been generated");
+        LOGGER.info("Password has been generated");
         return builder.toString();
     }
 }

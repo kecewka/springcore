@@ -2,6 +2,7 @@ package com.epam.springcore.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "training_types")
@@ -61,6 +62,19 @@ public class TrainingType {
 
     public void setTrainings(List<Training> trainings) {
         this.trainings = trainings;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TrainingType that = (TrainingType) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override

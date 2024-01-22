@@ -15,7 +15,7 @@ import java.util.List;
 public class TrainerServiceImpl implements TrainerService {
     private final TrainerRepository trainerRepository;
     private final UserService userService;
-    private static final Logger logger = LogManager.getLogger(TrainerServiceImpl.class);
+    private static final Logger LOGGER = LogManager.getLogger(TrainerServiceImpl.class);
 
     @Autowired
     public TrainerServiceImpl(TrainerRepository trainerRepository, UserService userService) {
@@ -25,32 +25,32 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     public List<Trainer> getAllTrainers() {
-        logger.info("Getting all trainers");
+        LOGGER.info("Getting all trainers");
         return trainerRepository.findAll();
     }
 
     @Override
     public Trainer findTrainerById(Long id) {
-        logger.info("Finding trainer with ID: {}", id);
+        LOGGER.info("Finding trainer with ID: {}", id);
         return trainerRepository.findById(id);
     }
 
     @Override
     public void createTrainer(Trainer trainer) {
-        logger.info("Creating trainer: {}", trainer);
+        LOGGER.info("Creating trainer: {}", trainer);
         userService.createUser(trainer.getUser());
         trainerRepository.createTrainer(trainer);
     }
 
     @Override
     public void updateTrainer(Trainer trainer) {
-        logger.info("Updating trainer: {}", trainer);
+        LOGGER.info("Updating trainer: {}", trainer);
         trainerRepository.updateTrainer(trainer);
     }
 
     @Override
     public void deleteTrainer(Long id) {
-        logger.info("Deleting trainer with ID: {}", id);
+        LOGGER.info("Deleting trainer with ID: {}", id);
         trainerRepository.deleteTrainer(id);
     }
 }

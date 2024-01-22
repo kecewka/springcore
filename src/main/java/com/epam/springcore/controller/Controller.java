@@ -7,12 +7,9 @@ import com.epam.springcore.service.TrainerService;
 import com.epam.springcore.service.TrainingService;
 import com.epam.springcore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
-//@RestController
-//@RequestMapping(value = "/api")
 public class Controller {
 
     private final UserService userService;
@@ -35,13 +32,4 @@ public class Controller {
         return trainee;
     }
 
-//    @GetMapping
-//    public String asd(){
-//        return userService.getUserById(1L).getFirstName();
-//    }
-
-//    @GetMapping
-//    public String qwe(){
-//        return traineeService.findTraineeById(1L).toString();
-//    }
 }

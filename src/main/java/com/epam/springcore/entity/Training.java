@@ -2,6 +2,7 @@ package com.epam.springcore.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "trainings")
@@ -83,6 +84,19 @@ public class Training {
 
     public void setTrainingDuration(Long trainingDuration) {
         this.trainingDuration = trainingDuration;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Training training = (Training) o;
+        return Objects.equals(id, training.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
