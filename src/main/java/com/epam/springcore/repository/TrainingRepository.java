@@ -1,23 +1,19 @@
 package com.epam.springcore.repository;
 
 import com.epam.springcore.entity.Training;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface TrainingRepository {
+
+@Repository
+public interface TrainingRepository extends JpaRepository<Training, Long> {
     // Calls database to get a list of all Records in trainings table
     List<Training> findAll();
 
     // Calls database to get a single Record in trainings table which matches id
-    Training findById(Long id);
-
-    // Calls database to create a record in trainings table
-    void createTraining(Training training);
-
-    // Calls database to update a record in trainings table
-    void updateTraining(Training training);
-
-    // Calls database to delete a single Record in trainings table which matches id
-    void deleteTraining(Long id);
+    Optional<Training> findById(Long id);
 
 }

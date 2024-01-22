@@ -69,15 +69,15 @@
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.6.15.Final</version>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.1.6.Final</version>
         </dependency>
 
-       <!-- <dependency>
+        <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
             <version>3.0.0</version>
-        </dependency>-->
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
         <dependency>
@@ -132,6 +132,7 @@
             <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
+
 
 
     </dependencies>

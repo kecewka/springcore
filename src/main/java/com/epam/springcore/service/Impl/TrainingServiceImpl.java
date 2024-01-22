@@ -29,25 +29,26 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public Training findTrainingById(Long id) {
+        Training training = null;
         LOGGER.info("Finding training with ID: {}", id);
-        return trainingRepository.findById(id);
+        return training;
     }
 
     @Override
     public void createTraining(Training training) {
         LOGGER.info("Creating trainer: {}", training);
-        trainingRepository.createTraining(training);
+        trainingRepository.save(training);
     }
 
     @Override
     public void updateTraining(Training training) {
         LOGGER.info("Updating trainer: {}", training);
-        trainingRepository.updateTraining(training);
+        trainingRepository.save(training);
     }
 
     @Override
     public void deleteTraining(Long id) {
         LOGGER.info("Deleting training with ID: {}", id);
-        trainingRepository.deleteTraining(id);
+        trainingRepository.deleteById(id);
     }
 }

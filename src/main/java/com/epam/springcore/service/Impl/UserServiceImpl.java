@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -29,8 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
+        User user = null;
         LOGGER.info("Finding user with ID: {}", id);
-        return userRepository.findById(id);
+        return user;
     }
 
     @Override
@@ -46,25 +48,25 @@ public class UserServiceImpl implements UserService {
         String password = generatePassword();
         user.setUsername(username);
         user.setPassword(password);
-        userRepository.saveUser(user);
+        userRepository.save(user);
     }
 
     @Override
     public void updateUser(User user) {
         LOGGER.info("Updating user: {}", user);
-        userRepository.updateUser(user);
+        userRepository.save(user);
     }
 
     @Override
     public void deleteUser(Long id) {
         LOGGER.info("Deleting user with ID: {}", id);
-        userRepository.deleteUser(id);
+        userRepository.deleteById(id);
     }
 
     @Override
     public boolean usernameExists(String username) {
         LOGGER.info("Checking the existence of username: {}", username);
-        return userRepository.usernameExists(username);
+        return false;//userRepository.usernameExists(username);
     }
 
     public String generateUsername(String firstName, String lastName) {

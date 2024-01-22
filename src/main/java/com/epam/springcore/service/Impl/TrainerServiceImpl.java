@@ -31,26 +31,27 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     public Trainer findTrainerById(Long id) {
+        Trainer trainer = null;
         LOGGER.info("Finding trainer with ID: {}", id);
-        return trainerRepository.findById(id);
+        return trainer;
     }
 
     @Override
     public void createTrainer(Trainer trainer) {
         LOGGER.info("Creating trainer: {}", trainer);
         userService.createUser(trainer.getUser());
-        trainerRepository.createTrainer(trainer);
+        trainerRepository.save(trainer);
     }
 
     @Override
     public void updateTrainer(Trainer trainer) {
         LOGGER.info("Updating trainer: {}", trainer);
-        trainerRepository.updateTrainer(trainer);
+        trainerRepository.save(trainer);
     }
 
     @Override
     public void deleteTrainer(Long id) {
         LOGGER.info("Deleting trainer with ID: {}", id);
-        trainerRepository.deleteTrainer(id);
+        trainerRepository.deleteById(id);
     }
 }

@@ -1,6 +1,6 @@
 package com.epam.springcore.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,9 +10,18 @@ public class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name = "user_id")
     private User user;
+    @ManyToOne
+    @JoinColumn(name = "specialization")
     private TrainingType specialization;
+    @OneToMany(mappedBy = "trainer")
     private List<Training> trainings;
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "trainee_trainer",
+    joinColumns = @JoinColumn(name = "trainer_id"),
+    inverseJoinColumns = @JoinColumn(name = "trainee_id"))
     private List<Trainee> trainees;
 
     public Trainer() {

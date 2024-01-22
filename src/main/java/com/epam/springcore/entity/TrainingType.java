@@ -1,6 +1,6 @@
 package com.epam.springcore.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,7 +11,9 @@ public class TrainingType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @OneToMany(mappedBy = "specialization")
     private List<Trainer> trainers;
+    @OneToMany(mappedBy = "trainingType")
     private List<Training> trainings;
 
     public TrainingType() {

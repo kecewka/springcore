@@ -1,28 +1,27 @@
 package com.epam.springcore.config;
 
+import jakarta.persistence.EntityManagerFactory;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.sql.DataSource;
-
-/*import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import java.util.Properties;*/
+import java.sql.SQLOutput;
+import java.util.Properties;
+
 
 @Configuration
 @PropertySource("classpath:db.properties")
+@EnableJpaRepositories(basePackages = "com.epam.springcore.repository")
+@EnableTransactionManagement
 public class DatabaseConfig {
 
     private Environment environment;
@@ -31,6 +30,7 @@ public class DatabaseConfig {
     public void setEnvironment(Environment environment) {
         this.environment = environment;
     }
+
 
     @Bean
     public BasicDataSource basicDataSource() {
@@ -43,17 +43,38 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
-        DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(dataSource);
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true);
+
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("com.epam.springcore.entity");
+        factory.setDataSource(basicDataSource());
+        return factory;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+
+        JpaTransactionManager txManager = new JpaTransactionManager();
+        txManager.setEntityManagerFactory(entityManagerFactory);
+        return txManager;
+    }
+
+    @Bean
+    public Properties hibernateProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        properties.setProperty("hibernate.show_sql", "true");
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
         String dataFilePath = environment.getProperty("data.file.path");
-
-        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-        databasePopulator.addScript(new ClassPathResource(dataFilePath));
-
-        initializer.setDatabasePopulator(databasePopulator);
-        return initializer;
+        System.out.println(dataFilePath + " +++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        if (dataFilePath != null) {
+            properties.setProperty("hibernate.hbm2ddl.import_files", dataFilePath);
+        }
+        return properties;
     }
 
 }

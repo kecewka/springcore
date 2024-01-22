@@ -19,4 +19,6 @@ public interface TraineeService {
 
     // Calls repository to delete a trainee by id
     void deleteTrainee(Long id);
+
+    Trainee findTraineeByUsername(String username);
 }
