@@ -1,29 +1,34 @@
 package com.epam.springcore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
 @Table(name = "trainings")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Training {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "trainee_id")
     private Trainee trainee;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
-    @Column(name = "training_name")
+    @Column(name = "training_name", nullable = false)
     private String trainingName;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "training_type_id")
     private TrainingType trainingType;
-    @Column(name = "training_date")
+    @Column(name = "training_date", nullable = false)
     private LocalDate trainingDate;
-    @Column(name = "training_duration")
+    @Column(name = "training_duration", nullable = false)
     private Long trainingDuration;
 
     public Training() {
@@ -112,10 +117,10 @@ public class Training {
     public String toString() {
         return "Training{" +
                 "id=" + id +
-                ", trainee=" + trainee +
-                ", trainer=" + trainer +
+                ", trainee=" + trainee.getId() +
+                ", trainer=" + trainer.getId() +
                 ", trainingName='" + trainingName + '\'' +
-                ", trainingType=" + trainingType +
+                ", trainingType=" + trainingType.getName() +
                 ", trainingDate=" + trainingDate +
                 ", trainingDuration=" + trainingDuration +
                 '}';

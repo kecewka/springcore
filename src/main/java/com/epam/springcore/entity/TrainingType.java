@@ -1,15 +1,19 @@
 package com.epam.springcore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "training_types")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class TrainingType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "training_type_name", nullable = false)
     private String name;
     @OneToMany(mappedBy = "specialization")
     private List<Trainer> trainers;

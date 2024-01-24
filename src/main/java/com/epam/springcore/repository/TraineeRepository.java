@@ -15,8 +15,8 @@ public interface TraineeRepository extends JpaRepository<Trainee, Long> {
     // Calls database to get a single Record in trainees table which matches id
     Optional<Trainee> findById(Long id);
 
+    // Calls database to get a single Record in trainees table which matches user_id
     Optional<Trainee> findByUserId(Long id);
-
 
 
 }

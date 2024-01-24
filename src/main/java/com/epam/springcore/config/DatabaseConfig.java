@@ -14,7 +14,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import java.sql.SQLOutput;
 import java.util.Properties;
 
 
@@ -52,6 +51,7 @@ public class DatabaseConfig {
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("com.epam.springcore.entity");
         factory.setDataSource(basicDataSource());
+        factory.setJpaProperties(hibernateProperties());
         return factory;
     }
 
@@ -63,17 +63,14 @@ public class DatabaseConfig {
         return txManager;
     }
 
+
     @Bean
     public Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        String dataFilePath = environment.getProperty("data.file.path");
-        System.out.println(dataFilePath + " +++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        if (dataFilePath != null) {
-            properties.setProperty("hibernate.hbm2ddl.import_files", dataFilePath);
-        }
+        properties.setProperty("hibernate.hbm2ddl.import_files", environment.getProperty("data.file.path"));
         return properties;
     }
 

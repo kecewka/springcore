@@ -1,11 +1,14 @@
 package com.epam.springcore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "trainers")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -93,7 +96,7 @@ public class Trainer {
     public String toString() {
         return "Trainer{" +
                 "id=" + id +
-                ", specialization=" + specialization +
+                ", specialization=" + specialization.getName() +
                 ", user=" + user +
                 ", trainings=" + trainings +
                 ", trainees=" + trainees +

@@ -18,6 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User getUserByUsername(String username);
 
     // Calls database to check the number of users who have particular username
-    //boolean usernameExists(String username);
+    boolean usernameExists(String username);
 
 }

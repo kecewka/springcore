@@ -4,7 +4,6 @@ import com.epam.springcore.config.ApplicationConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRegistration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -22,4 +21,5 @@ public class SpringCoreApplication implements WebApplicationInitializer {
         servletRegistration.addMapping("/");
         servletRegistration.setLoadOnStartup(1);
     }
+
 }

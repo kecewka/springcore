@@ -3,13 +3,13 @@ package com.epam.springcore.service.Impl;
 import com.epam.springcore.entity.User;
 import com.epam.springcore.repository.UserRepository;
 import com.epam.springcore.service.UserService;
+import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -23,11 +23,13 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public List<User> getAllUsers() {
         LOGGER.info("Getting all users");
         return userRepository.findAll();
     }
 
+    @Transactional
     @Override
     public User getUserById(Long id) {
         User user = null;
@@ -35,6 +37,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Transactional
     @Override
     public User getUserByUsername(String username) {
         LOGGER.info("Finding user with username: {}", username);
@@ -66,7 +69,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean usernameExists(String username) {
         LOGGER.info("Checking the existence of username: {}", username);
-        return false;//userRepository.usernameExists(username);
+        return userRepository.usernameExists(username);
     }
 
     public String generateUsername(String firstName, String lastName) {
