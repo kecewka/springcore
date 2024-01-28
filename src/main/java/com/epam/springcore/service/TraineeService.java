@@ -4,6 +4,7 @@ import com.epam.springcore.entity.Trainee;
 import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.Training;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface TraineeService {
@@ -29,7 +30,7 @@ public interface TraineeService {
     void deleteTraineeByUsername(String username);
 
     // Calls repository to find a trainees training list by username and training name
-    List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName);
+    List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName, LocalDate trainingDate);
 
     // Calls repository to update Trainees trainers list
     void updateTraineesTrainerList(Long id, List<Trainer> trainersList);

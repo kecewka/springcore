@@ -3,6 +3,7 @@ package com.epam.springcore.service;
 import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.Training;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface TrainerService {
@@ -28,7 +29,7 @@ public interface TrainerService {
     void deleteTrainerByUsername(String username);
 
     // Calls repository to find a trainees training list by username and training name
-    List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName);
+    List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName, LocalDate trainingDate);
 
     // Calls repository to change trainers password
     void changeTrainerPassword(Long id, String password);

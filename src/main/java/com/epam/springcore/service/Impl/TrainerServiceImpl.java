@@ -13,8 +13,12 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import static com.epam.springcore.repository.specifications.TrainingSpecifications.*;
+import static com.epam.springcore.repository.specifications.TrainingSpecifications.hasTrainingDate;
 
 @Service
 public class TrainerServiceImpl implements TrainerService {
@@ -40,8 +44,12 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     @Transactional
     public Trainer findTrainerById(Long id) {
-        Trainer trainer = null;
         LOGGER.info("Finding trainer with ID: {}", id);
+        Trainer trainer = null;
+        Optional<Trainer> optional = trainerRepository.findById(id);
+        if (optional.isPresent()) {
+            trainer = optional.get();
+        }
         return trainer;
     }
 
@@ -92,10 +100,23 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     @Transactional
-    public List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName) {
+    public List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName, LocalDate trainingDate) {
         LOGGER.info("finding training by username and criteria");
         Trainer trainer = findTrainerByUsername(username);
-        return trainingRepository.findByUsernameAndCriteria(trainer.getId(), trainingName);
+        if (trainingName == null && trainingDate == null) {
+            return trainingRepository.findAll(hasTrainerId(trainer.getId()));
+        }
+        if (trainingName == null) {
+            return trainingRepository.findAll(hasTrainerId(trainer.getId())
+                    .and(hasTrainingDate(trainingDate)));
+        }
+        if (trainingDate == null) {
+            return trainingRepository.findAll(hasTrainerId(trainer.getId())
+                    .and(hasTrainingName(trainingName)));
+        }
+        return trainingRepository.findAll(hasTrainerId(trainer.getId())
+                .and(hasTrainingName(trainingName))
+                .and(hasTrainingDate(trainingDate)));
     }
 
     @Override
@@ -127,7 +148,7 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     @Transactional
-    public List<Trainer> getNotAssignedAndActiveTrainers(){
+    public List<Trainer> getNotAssignedAndActiveTrainers() {
         LOGGER.info("finding all active trainers without trainees");
         return trainerRepository.findAllActiveTrainersWithoutTrainees();
     }

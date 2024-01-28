@@ -14,8 +14,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import static com.epam.springcore.repository.specifications.TrainingSpecifications.*;
 
 @Service
 public class TraineeServiceImpl implements TraineeService {
@@ -102,11 +105,26 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Override
     @Transactional
-    public List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName) {
+    public List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName, LocalDate trainingDate) {
         LOGGER.info("finding training by username and criteria");
         Trainee trainee = findTraineeByUsername(username);
-        return trainingRepository.findByUsernameAndCriteria(trainee.getId(), trainingName);
+        if(trainingName == null && trainingDate == null) {
+            return trainingRepository.findAll(hasTraineeId(trainee.getId()));
+        }
+        if(trainingName == null) {
+            return trainingRepository.findAll(hasTraineeId(trainee.getId())
+                    .and(hasTrainingDate(trainingDate)));
+        }
+        if(trainingDate == null) {
+            return trainingRepository.findAll(hasTraineeId(trainee.getId())
+                    .and(hasTrainingName(trainingName)));
+        }
+        return trainingRepository.findAll(hasTraineeId(trainee.getId())
+                .and(hasTrainingName(trainingName))
+                .and(hasTrainingDate(trainingDate)));
+
     }
+
 
     @Override
     @Transactional
