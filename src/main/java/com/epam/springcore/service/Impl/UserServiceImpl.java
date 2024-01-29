@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -32,8 +33,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User getUserById(Long id) {
-        User user = null;
         LOGGER.info("Finding user with ID: {}", id);
+        User user = null;
+        Optional<User> optional = userRepository.findById(id);
+        if (optional.isPresent()) {
+            user = optional.get();
+        }
         return user;
     }
 
@@ -69,7 +74,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean usernameExists(String username) {
         LOGGER.info("Checking the existence of username: {}", username);
-        return userRepository.usernameExists(username);
+        return userRepository.existsByUsername(username);
     }
 
     public String generateUsername(String firstName, String lastName) {

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -12,12 +13,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAll();
 
     // Calls database to get a single Record in users table which matches id
-    <Optional> User findById(Long id);
+    Optional<User> findById(Long id);
 
     // Calls database to get a single Record in users table which matches username
     User getUserByUsername(String username);
 
     // Calls database to check the number of users who have particular username
-    boolean usernameExists(String username);
+    boolean existsByUsername(String username);
 
 }

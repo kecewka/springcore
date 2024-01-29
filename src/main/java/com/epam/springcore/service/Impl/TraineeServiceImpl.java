@@ -65,6 +65,7 @@ public class TraineeServiceImpl implements TraineeService {
         Trainee trainee = null;
         User user = userService.getUserByUsername(username);
         Optional<Trainee> optional = traineeRepository.findByUserId(user.getId());
+
         if (optional.isPresent()) {
             trainee = optional.get();
         }
@@ -108,14 +109,14 @@ public class TraineeServiceImpl implements TraineeService {
     public List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName, LocalDate trainingDate) {
         LOGGER.info("finding training by username and criteria");
         Trainee trainee = findTraineeByUsername(username);
-        if(trainingName == null && trainingDate == null) {
+        if (trainingName == null && trainingDate == null) {
             return trainingRepository.findAll(hasTraineeId(trainee.getId()));
         }
-        if(trainingName == null) {
+        if (trainingName == null) {
             return trainingRepository.findAll(hasTraineeId(trainee.getId())
                     .and(hasTrainingDate(trainingDate)));
         }
-        if(trainingDate == null) {
+        if (trainingDate == null) {
             return trainingRepository.findAll(hasTraineeId(trainee.getId())
                     .and(hasTrainingName(trainingName)));
         }

@@ -130,7 +130,7 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     @Transactional
-    public void activateTrainee(Long id) {
+    public void activateTrainer(Long id) {
         LOGGER.info("activating trainer with id: {}", id);
         Trainer trainer = findTrainerById(id);
         trainer.getUser().setActive(true);
@@ -139,7 +139,7 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     @Transactional
-    public void deactivateTrainee(Long id) {
+    public void deactivateTrainer(Long id) {
         LOGGER.info("deactivating trainer with id: {}", id);
         Trainer trainer = findTrainerById(id);
         trainer.getUser().setActive(false);

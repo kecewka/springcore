@@ -35,10 +35,10 @@ public interface TrainerService {
     void changeTrainerPassword(Long id, String password);
 
     // Calls repository to change Activate trainer
-    void activateTrainee(Long id);
+    void activateTrainer(Long id);
 
     // Calls repository to change Deactivate trainer
-    void deactivateTrainee(Long id);
+    void deactivateTrainer(Long id);
 
     // Calls repository to get all the trainers who were not assigned to trainees
     List<Trainer> getNotAssignedAndActiveTrainers();
