@@ -4,3 +4,4 @@
 
 #### Current tasks completed (branches)
 - Springcore
+- Hibernate
