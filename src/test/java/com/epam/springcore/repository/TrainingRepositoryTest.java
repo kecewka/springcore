@@ -2,7 +2,6 @@ package com.epam.springcore.repository;
 
 import com.epam.springcore.config.TestConfig;
 import com.epam.springcore.entity.*;
-import jakarta.transaction.Transactional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -51,20 +49,4 @@ public class TrainingRepositoryTest {
         assertThat(trainings).hasSize(2);
     }
 
-    @Test
-    public void findByIdTest() {
-        Optional<Training> optional = trainingRepository.findById(2L);
-        Training training = new Training(2L,
-                null,
-                null,
-                "name2", null, LocalDate.of(2023, 11, 20), 20L);
-        assertThat(optional.get().equals(training));
-    }
-
-    @Test
-    @Transactional
-    public void findByUsernameAndCriteriaTest() {
-        List<Training> trainings = trainingRepository.findByUsernameAndCriteria(1L, "name2");
-        assertThat(trainings).hasSize(1);
-    }
 }

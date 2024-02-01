@@ -4,25 +4,61 @@ import com.epam.springcore.entity.User;
 
 import java.util.List;
 
+/**
+ * Service interface for managing users.
+ */
 public interface UserService {
-    // Calls repository to get List of All Users
+
+    /**
+     * Retrieves a list of all users.
+     *
+     * @return A list of all users.
+     */
     List<User> getAllUsers();
 
-    // Calls repository to get User by id
+    /**
+     * Retrieves a user by their unique identifier.
+     *
+     * @param id The unique identifier of the user.
+     * @return The user with the specified ID, or null if not found.
+     */
     User getUserById(Long id);
 
-    // Calls repository to get User by username
+    /**
+     * Retrieves a user by their username.
+     *
+     * @param username The username of the user.
+     * @return The user with the specified username, or null if not found.
+     */
     User getUserByUsername(String username);
 
-    // Calls repository to check if username exists
+    /**
+     * Checks if a user with the given username exists.
+     *
+     * @param username The username to check for existence.
+     * @return {@code true} if a user with the username exists, {@code false} otherwise.
+     */
     boolean usernameExists(String username);
 
-    // Calls repository to create User
+    /**
+     * Creates a new user using the provided information.
+     *
+     * @param user The user to be created.
+     */
     void createUser(User user);
 
-    // Calls repository to update User
+    /**
+     * Updates the information of an existing user.
+     *
+     * @param user The user with updated information.
+     */
     void updateUser(User user);
 
-    // Calls repository to delete User by id
+    /**
+     * Deletes a user by their unique identifier.
+     *
+     * @param id The unique identifier of the user to be deleted.
+     */
     void deleteUser(Long id);
 }
+

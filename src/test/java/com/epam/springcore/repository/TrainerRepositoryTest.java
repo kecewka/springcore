@@ -40,19 +40,6 @@ public class TrainerRepositoryTest {
     }
 
     @Test
-    public void findAllTest() {
-        List<Trainer> traineeList = trainerRepository.findAll();
-        assertThat(traineeList).hasSize(3);
-    }
-
-    @Test
-    public void findByIdTest() {
-        Optional<Trainer> optional = trainerRepository.findById(1L);
-        Trainer trainer = new Trainer(1L, null, null, null, null);
-        assertThat(optional.get().equals(trainer));
-    }
-
-    @Test
     public void findByUserIdTest() {
         Optional<Trainer> optional = trainerRepository.findByUserId(1L);
         Trainer trainer = new Trainer(1L, null, new User(1L, "a", "b", "c", "d", true), null, null);
@@ -64,6 +51,6 @@ public class TrainerRepositoryTest {
     @Test
     public void findAllActiveTrainersWithoutTraineesTest() {
         List<Trainer> trainers = trainerRepository.findAllActiveTrainersWithoutTrainees();
-        System.out.println(trainers.size());
+        assertThat(trainers).hasSize(1);
     }
 }

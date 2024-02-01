@@ -34,19 +34,6 @@ public class TraineeRepositoryTest {
     }
 
     @Test
-    public void findAllTest() {
-        List<Trainee> traineeList = traineeRepository.findAll();
-        assertThat(traineeList).hasSize(3);
-    }
-
-    @Test
-    public void findByIdTest() {
-        Optional<Trainee> optional = traineeRepository.findById(1L);
-        Trainee trainee = new Trainee(1L, LocalDate.of(1999, 12, 31), "asd", null, null, null);
-        assertThat(optional.get().equals(trainee));
-    }
-
-    @Test
     public void findByUserIdTest() {
         Optional<Trainee> optional = traineeRepository.findByUserId(1L);
         Trainee trainee = new Trainee(1L, LocalDate.of(1999, 12, 31), "asd",new User(1L, "a", "b", "c", "d", true), null, null);

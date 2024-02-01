@@ -7,40 +7,95 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TrainerService {
-    // Calls repository to get List of All Trainers
+
+    /**
+     * Retrieves a list of all trainers.
+     *
+     * @return A list of all trainers.
+     */
     List<Trainer> getAllTrainers();
 
-    // Calls repository to get Trainer by id
+    /**
+     * Retrieves a trainer by their unique identifier.
+     *
+     * @param id The unique identifier of the trainer.
+     * @return The trainer with the specified ID, or null if not found.
+     */
     Trainer findTrainerById(Long id);
 
-    // Calls repository and User Service to create a Trainer
+    /**
+     * Creates a new trainer using the provided information.
+     *
+     * @param trainer The trainer to be created.
+     */
     void createTrainer(Trainer trainer);
 
-    // Calls repository to update a Trainer
+    /**
+     * Updates the information of an existing trainer.
+     *
+     * @param trainer The trainer with updated information.
+     */
     void updateTrainer(Trainer trainer);
 
-    // Calls repository to delete a Trainer by id
+    /**
+     * Deletes a trainer by their unique identifier.
+     *
+     * @param id The unique identifier of the trainer to be deleted.
+     */
     void deleteTrainer(Long id);
 
-    // Calls repository to find a Trainer by username
+    /**
+     * Retrieves a trainer by their username.
+     *
+     * @param username The username of the trainer.
+     * @return The trainer with the specified username, or null if not found.
+     */
     Trainer findTrainerByUsername(String username);
 
-    // Calls repository to delete a trainer by username
+    /**
+     * Deletes a trainer by their username.
+     *
+     * @param username The username of the trainer to be deleted.
+     */
     void deleteTrainerByUsername(String username);
 
-    // Calls repository to find a trainees training list by username and training name
+    /**
+     * Retrieves the training list for a trainer based on username, training name, and date.
+     *
+     * @param username     The username of the trainer.
+     * @param trainingName The name of the training.
+     * @param trainingDate The date of the training.
+     * @return A list of trainings that match the criteria.
+     */
     List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName, LocalDate trainingDate);
 
-    // Calls repository to change trainers password
+    /**
+     * Changes the password for a specific trainer.
+     *
+     * @param id       The unique identifier of the trainer.
+     * @param password The new password for the trainer.
+     */
     void changeTrainerPassword(Long id, String password);
 
-    // Calls repository to change Activate trainer
+    /**
+     * Activates a trainer account.
+     *
+     * @param id The unique identifier of the trainer.
+     */
     void activateTrainer(Long id);
 
-    // Calls repository to change Deactivate trainer
+    /**
+     * Deactivates a trainer account.
+     *
+     * @param id The unique identifier of the trainer.
+     */
     void deactivateTrainer(Long id);
 
-    // Calls repository to get all the trainers who were not assigned to trainees
+    /**
+     * Retrieves a list of trainers who are not assigned to any trainees and are active.
+     *
+     * @return A list of not assigned and active trainers.
+     */
     List<Trainer> getNotAssignedAndActiveTrainers();
 }
 

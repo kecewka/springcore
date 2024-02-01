@@ -71,6 +71,8 @@ public class DatabaseConfig {
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.hbm2ddl.import_files", environment.getProperty("data.file.path"));
+
+
         return properties;
     }
 

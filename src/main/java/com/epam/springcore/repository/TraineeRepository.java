@@ -4,18 +4,17 @@ import com.epam.springcore.entity.Trainee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface TraineeRepository extends JpaRepository<Trainee, Long> {
-    // Calls database to get a list of all Records in trainees table
-    List<Trainee> findAll();
 
-    // Calls database to get a single Record in trainees table which matches id
-    Optional<Trainee> findById(Long id);
-
-    // Calls database to get a single Record in trainees table which matches user_id
+    /**
+     * Retrieves a trainee based on their user ID
+     *
+     * @param id The unique identifier of the user
+     * @return An {@code Optional} containing the trainee if found, or an empty {@code Optional} otherwise.
+     * */
     Optional<Trainee> findByUserId(Long id);
 
 

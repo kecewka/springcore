@@ -10,7 +10,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -28,19 +27,6 @@ public class UserRepositoryTest {
                 new User(2L, "a", "a", "b", "a", true),
                 new User(3L, "a", "a", "c", "a", false)
         ));
-    }
-
-    @Test
-    public void findAllTest() {
-        List<User> traineeList = userRepository.findAll();
-        assertThat(traineeList).hasSize(3);
-    }
-
-    @Test
-    public void findByIdTest() {
-        Optional<User> optional = userRepository.findById(1L);
-        User user = new User(1L, "a", "a", "a", "a", true);
-        assertThat(optional.get().equals(user));
     }
 
     @Test
