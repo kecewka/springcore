@@ -3,6 +3,7 @@ package com.epam.springcore.service.Impl;
 import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.Training;
 import com.epam.springcore.entity.User;
+import com.epam.springcore.exception.TrainerNotFoundException;
 import com.epam.springcore.repository.TrainerRepository;
 import com.epam.springcore.repository.TrainingRepository;
 import com.epam.springcore.service.TrainerService;
@@ -45,12 +46,8 @@ public class TrainerServiceImpl implements TrainerService {
     @Transactional
     public Trainer findTrainerById(Long id) {
         LOGGER.info("Finding trainer with ID: {}", id);
-        Trainer trainer = null;
-        Optional<Trainer> optional = trainerRepository.findById(id);
-        if (optional.isPresent()) {
-            trainer = optional.get();
-        }
-        return trainer;
+
+        return trainerRepository.findById(id).orElseThrow(() -> new TrainerNotFoundException("Trainer with id: " + id + " not found"));
     }
 
     @Override
@@ -79,14 +76,9 @@ public class TrainerServiceImpl implements TrainerService {
     @Transactional
     public Trainer findTrainerByUsername(String username) {
         LOGGER.info("Finding trainer with Username: {}", username);
-        Trainer trainer = null;
-        User user = userService.getUserByUsername(username);
-        Optional<Trainer> optional = trainerRepository.findByUserId(user.getId());
-        if (optional.isPresent()) {
-            trainer = optional.get();
-        }
+        User user = userService.findUserByUsername(username);
 
-        return trainer;
+        return trainerRepository.findById(user.getId()).orElseThrow(() -> new TrainerNotFoundException("Trainer with username: " + username + " not found"));
 
     }
 

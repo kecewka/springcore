@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,13 +56,14 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getUserByUsernameTest() {
+    public void findUserByUsernameTest() {
         User user = new User(1L, "asd", "asd", "asd.asd", "asd", true);
-        when(userRepository.getUserByUsername(user.getUsername())).thenReturn(user);
+        Optional<User> optional = Optional.of(user);
+        when(userRepository.findUserByUsername(user.getUsername())).thenReturn(optional);
 
-        User foundUser = userService.getUserByUsername(user.getUsername());
+        User foundUser = userService.findUserByUsername(user.getUsername());
 
-        verify(userRepository,times(1)).getUserByUsername(user.getUsername());
+        verify(userRepository, times(1)).findUserByUsername(user.getUsername());
         assertEquals(user, foundUser);
     }
 

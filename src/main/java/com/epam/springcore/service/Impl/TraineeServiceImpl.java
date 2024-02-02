@@ -4,6 +4,7 @@ import com.epam.springcore.entity.Trainee;
 import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.Training;
 import com.epam.springcore.entity.User;
+import com.epam.springcore.exception.TraineeNotFoundException;
 import com.epam.springcore.repository.TraineeRepository;
 import com.epam.springcore.repository.TrainingRepository;
 import com.epam.springcore.service.TraineeService;
@@ -48,13 +49,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Transactional
     public Trainee findTraineeById(Long id) {
         LOGGER.info("Finding trainee with ID: {}", id);
-        Trainee trainee = null;
-        Optional<Trainee> optional = traineeRepository.findById(id);
-        if (optional.isPresent()) {
-            trainee = optional.get();
-        }
 
-        return trainee;
+        return traineeRepository.findById(id).orElseThrow(() -> new TraineeNotFoundException("Trainee with id: " + id + " not found"));
 
     }
 
@@ -62,15 +58,9 @@ public class TraineeServiceImpl implements TraineeService {
     @Transactional
     public Trainee findTraineeByUsername(String username) {
         LOGGER.info("Finding trainee with Username: {}", username);
-        Trainee trainee = null;
-        User user = userService.getUserByUsername(username);
-        Optional<Trainee> optional = traineeRepository.findByUserId(user.getId());
+        User user = userService.findUserByUsername(username);
 
-        if (optional.isPresent()) {
-            trainee = optional.get();
-        }
-
-        return trainee;
+        return traineeRepository.findById(user.getId()).orElseThrow(() -> new TraineeNotFoundException("Trainee with username: " + username + " not found"));
 
     }
 

@@ -30,7 +30,7 @@ public interface UserService {
      * @param username The username of the user.
      * @return The user with the specified username, or null if not found.
      */
-    User getUserByUsername(String username);
+    User findUserByUsername(String username);
 
     /**
      * Checks if a user with the given username exists.

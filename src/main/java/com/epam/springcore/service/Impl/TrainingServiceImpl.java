@@ -1,6 +1,7 @@
 package com.epam.springcore.service.Impl;
 
 import com.epam.springcore.entity.Training;
+import com.epam.springcore.exception.TrainingNotFoundException;
 import com.epam.springcore.repository.TrainingRepository;
 import com.epam.springcore.service.TrainingService;
 import org.apache.logging.log4j.LogManager;
@@ -32,12 +33,8 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public Training findTrainingById(Long id) {
         LOGGER.info("Finding training with ID: {}", id);
-        Training training = null;
-        Optional<Training> optional = trainingRepository.findById(id);
-        if (optional.isPresent()) {
-            training = optional.get();
-        }
-        return training;
+
+        return trainingRepository.findById(id).orElseThrow(() -> new TrainingNotFoundException("Training with id: " + id + " not found"));
     }
 
     @Override

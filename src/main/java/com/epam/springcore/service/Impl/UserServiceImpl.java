@@ -1,6 +1,7 @@
 package com.epam.springcore.service.Impl;
 
 import com.epam.springcore.entity.User;
+import com.epam.springcore.exception.UserNotFoundException;
 import com.epam.springcore.repository.UserRepository;
 import com.epam.springcore.service.UserService;
 import jakarta.transaction.Transactional;
@@ -34,19 +35,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long id) {
         LOGGER.info("Finding user with ID: {}", id);
-        User user = null;
-        Optional<User> optional = userRepository.findById(id);
-        if (optional.isPresent()) {
-            user = optional.get();
-        }
-        return user;
+//
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id: " + id + " not found"));
     }
 
     @Transactional
     @Override
-    public User getUserByUsername(String username) {
+    public User findUserByUsername(String username) {
         LOGGER.info("Finding user with username: {}", username);
-        return userRepository.getUserByUsername(username);
+
+        return userRepository.findUserByUsername(username).orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
     }
 
     @Override

@@ -61,12 +61,12 @@ public class TraineeServiceTest {
         Trainee trainee = new Trainee();
         User user = new User(1L, "john", "doe", "john.doe", "asdqweasd1", true);
         Optional<Trainee> optional = Optional.of(trainee);
-        when(userService.getUserByUsername(username)).thenReturn(user);
+        when(userService.findUserByUsername(username)).thenReturn(user);
         when(traineeRepository.findByUserId(user.getId())).thenReturn(optional);
 
         Trainee foundTrainee = traineeService.findTraineeByUsername(username);
 
-        verify(userService, times(1)).getUserByUsername(username);
+        verify(userService, times(1)).findUserByUsername(username);
         verify(traineeRepository, times(1)).findByUserId(user.getId());
         assertEquals(trainee, foundTrainee);
     }
@@ -101,12 +101,12 @@ public class TraineeServiceTest {
         Trainee trainee = new Trainee(1L, LocalDate.of(1999, 12, 31), "Str str. 31", user, new ArrayList<>(), new ArrayList<>());
         Optional<Trainee> optional = Optional.of(trainee);
 
-        when(userService.getUserByUsername(username)).thenReturn(user);
+        when(userService.findUserByUsername(username)).thenReturn(user);
         when(traineeRepository.findByUserId(user.getId())).thenReturn(optional);
 
         traineeService.deleteTraineeByUsername(username);
 
-        verify(userService, times(1)).getUserByUsername(username);
+        verify(userService, times(1)).findUserByUsername(username);
         verify(traineeRepository, times(1)).deleteById(1L);
     }
 

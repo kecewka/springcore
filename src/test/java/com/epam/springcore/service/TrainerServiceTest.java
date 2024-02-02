@@ -62,12 +62,12 @@ public class TrainerServiceTest {
         Trainer trainer = new Trainer();
         User user = new User(1L, "john", "doe", "john.doe", "asdqweasd1", true);
         Optional<Trainer> optional = Optional.of(trainer);
-        when(userService.getUserByUsername(username)).thenReturn(user);
+        when(userService.findUserByUsername(username)).thenReturn(user);
         when(trainerRepository.findByUserId(user.getId())).thenReturn(optional);
 
         Trainer foundTrainer = trainerService.findTrainerByUsername(username);
 
-        verify(userService, times(1)).getUserByUsername(username);
+        verify(userService, times(1)).findUserByUsername(username);
         verify(trainerRepository, times(1)).findByUserId(user.getId());
         assertEquals(trainer, foundTrainer);
     }
@@ -103,12 +103,12 @@ public class TrainerServiceTest {
         Trainer trainer = new Trainer(1L, trainingType, user, new ArrayList<>(), new ArrayList<>());
         Optional<Trainer> optional = Optional.of(trainer);
 
-        when(userService.getUserByUsername(username)).thenReturn(user);
+        when(userService.findUserByUsername(username)).thenReturn(user);
         when(trainerRepository.findByUserId(user.getId())).thenReturn(optional);
 
         trainerService.deleteTrainerByUsername(username);
 
-        verify(userService, times(1)).getUserByUsername(username);
+        verify(userService, times(1)).findUserByUsername(username);
         verify(trainerRepository, times(1)).deleteById(1L);
     }
 

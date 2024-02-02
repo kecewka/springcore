@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -31,7 +32,7 @@ public class UserRepositoryTest {
 
     @Test
     public void findByUsernameTest() {
-        User user = userRepository.getUserByUsername("a");
+        User user = userRepository.findUserByUsername("a").get();
         User user1 = new User(1L, "a", "a", "a", "a", true);
         assertThat(user.equals(user1));
     }

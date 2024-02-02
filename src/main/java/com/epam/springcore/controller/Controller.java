@@ -36,7 +36,7 @@ public class Controller {
 
     @GetMapping
     public void asd() {
-        traineeService.changeTraineePassword(2L, "password123");
+        userService.findUserByUsername("qwe");
 
     }
 
