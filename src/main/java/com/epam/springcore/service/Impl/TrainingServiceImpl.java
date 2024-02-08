@@ -4,12 +4,12 @@ import com.epam.springcore.entity.Training;
 import com.epam.springcore.exception.TrainingNotFoundException;
 import com.epam.springcore.repository.TrainingRepository;
 import com.epam.springcore.service.TrainingService;
+import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,14 +38,15 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
+    @Transactional
     public void createTraining(Training training) {
-        LOGGER.info("Creating trainer: {}", training);
+        LOGGER.info("Creating training: {}", training);
         trainingRepository.save(training);
     }
 
     @Override
     public void updateTraining(Training training) {
-        LOGGER.info("Updating trainer: {}", training);
+        LOGGER.info("Updating training: {}", training);
         trainingRepository.save(training);
     }
 

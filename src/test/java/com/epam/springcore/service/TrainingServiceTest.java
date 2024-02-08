@@ -5,9 +5,11 @@ import com.epam.springcore.repository.TrainingRepository;
 import com.epam.springcore.service.Impl.TrainingServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
+
 
 public class TrainingServiceTest {
     @InjectMocks

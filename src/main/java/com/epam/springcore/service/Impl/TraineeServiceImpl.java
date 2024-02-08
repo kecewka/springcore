@@ -60,7 +60,7 @@ public class TraineeServiceImpl implements TraineeService {
         LOGGER.info("Finding trainee with Username: {}", username);
         User user = userService.findUserByUsername(username);
 
-        return traineeRepository.findById(user.getId()).orElseThrow(() -> new TraineeNotFoundException("Trainee with username: " + username + " not found"));
+        return traineeRepository.findByUserId(user.getId()).orElseThrow(() -> new TraineeNotFoundException("Trainee with username: " + username + " not found"));
 
     }
 

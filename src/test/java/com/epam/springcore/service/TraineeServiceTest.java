@@ -4,12 +4,15 @@ import com.epam.springcore.entity.Trainee;
 import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.User;
 import com.epam.springcore.repository.TraineeRepository;
+import com.epam.springcore.repository.UserRepository;
 import com.epam.springcore.service.Impl.TraineeServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+
 public class TraineeServiceTest {
 
     @InjectMocks
@@ -27,6 +31,8 @@ public class TraineeServiceTest {
     private TraineeRepository traineeRepository;
     @Mock
     private UserService userService;
+    @Mock
+    private UserRepository userRepository;
 
     @Before
     public void init() {
@@ -60,6 +66,7 @@ public class TraineeServiceTest {
         String username = "john.doe";
         Trainee trainee = new Trainee();
         User user = new User(1L, "john", "doe", "john.doe", "asdqweasd1", true);
+        trainee.setUser(user);
         Optional<Trainee> optional = Optional.of(trainee);
         when(userService.findUserByUsername(username)).thenReturn(user);
         when(traineeRepository.findByUserId(user.getId())).thenReturn(optional);

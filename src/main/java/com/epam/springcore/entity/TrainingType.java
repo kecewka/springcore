@@ -46,14 +46,6 @@ public class TrainingType {
         this.name = name;
     }
 
-    public List<Trainer> getTrainersList() {
-        return trainers;
-    }
-
-    public void setTrainersList(List<Trainer> trainersList) {
-        this.trainers = trainersList;
-    }
-
     public List<Trainer> getTrainers() {
         return trainers;
     }

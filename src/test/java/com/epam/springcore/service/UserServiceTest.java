@@ -5,9 +5,11 @@ import com.epam.springcore.repository.UserRepository;
 import com.epam.springcore.service.Impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.swing.text.html.Option;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
+
 
 public class UserServiceTest {
 

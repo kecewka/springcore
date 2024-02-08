@@ -78,7 +78,7 @@ public class TrainerServiceImpl implements TrainerService {
         LOGGER.info("Finding trainer with Username: {}", username);
         User user = userService.findUserByUsername(username);
 
-        return trainerRepository.findById(user.getId()).orElseThrow(() -> new TrainerNotFoundException("Trainer with username: " + username + " not found"));
+        return trainerRepository.findByUserId(user.getId()).orElseThrow(() -> new TrainerNotFoundException("Trainer with username: " + username + " not found"));
 
     }
 
