@@ -7,9 +7,7 @@ import com.epam.springcore.entity.Training;
 import com.epam.springcore.entity.TrainingType;
 import com.epam.springcore.service.TraineeService;
 import com.epam.springcore.service.TrainerService;
-import com.epam.springcore.service.TrainingService;
 import com.epam.springcore.service.TrainingTypeService;
-import jakarta.transaction.Transactional;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,8 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
         uses = {TrainerService.class, TraineeService.class, TrainingTypeService.class})
 public abstract class TrainingMapper {
 
-    //@Autowired
-    //protected TrainingService trainingService;
     @Autowired
     protected TraineeService traineeService;
     @Autowired
@@ -49,7 +45,6 @@ public abstract class TrainingMapper {
     }
 
     @Named("nameToTrainingType")
-    //@Transactional
     protected TrainingType mapNameToTrainingType(String name) {
         return trainingTypeService.findByName(name);
     }
