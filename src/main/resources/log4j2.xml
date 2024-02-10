@@ -6,7 +6,11 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Root level="info">
+        <!-- Configure logger level for Spring's transaction management -->
+        <Logger name="org.springframework.transaction" level="DEBUG" />
+
+        <!-- Keep the Root logger as it is, which is currently INFO -->
+        <Root level="INFO">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>

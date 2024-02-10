@@ -21,8 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
         uses = {TrainerService.class, TraineeService.class, TrainingTypeService.class})
 public abstract class TrainingMapper {
 
-    @Autowired
-    protected TrainingService trainingService;
+    //@Autowired
+    //protected TrainingService trainingService;
     @Autowired
     protected TraineeService traineeService;
     @Autowired
@@ -32,10 +32,10 @@ public abstract class TrainingMapper {
 
     @Mapping(source = "traineeUsername", target = "trainee", qualifiedByName = "usernameToTrainee")
     @Mapping(source = "trainerUsername", target = "trainer", qualifiedByName = "usernameToTrainer")
-    @Mapping(source = "trainingTypeName", target = "trainingType", qualifiedByName = "nameToTrainingType")
     @Mapping(source = "trainingName", target = "trainingName")
     @Mapping(source = "trainingDate", target = "trainingDate")
     @Mapping(source = "trainingDuration", target = "trainingDuration")
+    @Mapping(source = "trainingTypeName", target = "trainingType", qualifiedByName = "nameToTrainingType")
     public abstract Training dtoToTraining(TrainingPostDTO dto);
 
     @Named("usernameToTrainee")
@@ -49,7 +49,7 @@ public abstract class TrainingMapper {
     }
 
     @Named("nameToTrainingType")
-    @Transactional
+    //@Transactional
     protected TrainingType mapNameToTrainingType(String name) {
         return trainingTypeService.findByName(name);
     }

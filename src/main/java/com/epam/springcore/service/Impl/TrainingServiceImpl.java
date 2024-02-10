@@ -1,7 +1,9 @@
 package com.epam.springcore.service.Impl;
 
+import com.epam.springcore.dto.training.TrainingPostDTO;
 import com.epam.springcore.entity.Training;
 import com.epam.springcore.exception.TrainingNotFoundException;
+import com.epam.springcore.mapper.Training.TrainingMapper;
 import com.epam.springcore.repository.TrainingRepository;
 import com.epam.springcore.service.TrainingService;
 import jakarta.transaction.Transactional;

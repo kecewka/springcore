@@ -23,7 +23,7 @@ public class Training {
     private Trainer trainer;
     @Column(name = "training_name", nullable = false)
     private String trainingName;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "training_type_id")
     private TrainingType trainingType;
     @Column(name = "training_date", nullable = false)

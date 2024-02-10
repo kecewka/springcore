@@ -1,5 +1,6 @@
 package com.epam.springcore.service;
 
+import com.epam.springcore.dto.training.TrainingPostDTO;
 import com.epam.springcore.entity.Training;
 
 import java.util.List;

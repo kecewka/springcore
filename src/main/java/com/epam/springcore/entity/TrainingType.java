@@ -17,7 +17,7 @@ public class TrainingType {
     private String name;
     @OneToMany(mappedBy = "specialization")
     private List<Trainer> trainers;
-    @OneToMany(mappedBy = "trainingType")
+    @OneToMany(mappedBy = "trainingType", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private List<Training> trainings;
 
     public TrainingType() {

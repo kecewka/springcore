@@ -16,8 +16,6 @@ public class TrainingController {
     private final TrainingService trainingService;
     private final TrainingMapper trainingMapper;
 
-
-
     @Autowired
     public TrainingController(TrainingService trainingService, TrainingMapper trainingMapper) {
         this.trainingService = trainingService;
