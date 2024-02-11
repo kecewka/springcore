@@ -25,7 +25,7 @@ public class Trainee {
     private User user;
     @OneToMany(mappedBy = "trainee", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE})
     private List<Training> trainings;
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "trainee_trainer",
             joinColumns = @JoinColumn(name = "trainee_id"),
             inverseJoinColumns = @JoinColumn(name = "trainer_id"))

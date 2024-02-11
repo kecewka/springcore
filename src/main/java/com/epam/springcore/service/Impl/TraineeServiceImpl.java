@@ -66,16 +66,23 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Override
     @Transactional
-    public void createTrainee(Trainee trainee) {
+    public Trainee createTrainee(Trainee trainee) {
         LOGGER.info("Creating trainee: {}", trainee);
         userService.createUser(trainee.getUser());
-        traineeRepository.save(trainee);
+        return traineeRepository.save(trainee);
     }
 
     @Override
-    public void updateTrainee(Trainee trainee) {
+    @Transactional
+    public Trainee updateTrainee(Trainee trainee) {
         LOGGER.info("Updating trainee: {}", trainee);
-        traineeRepository.save(trainee);
+        User updatedUser = trainee.getUser();
+        User user = userService.findUserByUsername(trainee.getUser().getUsername());
+        user.setFirstName(updatedUser.getFirstName());
+        user.setLastName(updatedUser.getLastName());
+        user.setActive(updatedUser.isActive());
+        trainee.setUser(user);
+        return traineeRepository.save(trainee);
     }
 
     @Override
@@ -151,5 +158,11 @@ public class TraineeServiceImpl implements TraineeService {
         Trainee trainee = findTraineeById(id);
         trainee.getUser().setActive(false);
         updateTrainee(trainee);
+    }
+
+    @Override
+    @Transactional
+    public List<Trainer> findTrainersList(String username) {
+        return traineeRepository.findTrainersById(findTraineeByUsername(username).getId());
     }
 }

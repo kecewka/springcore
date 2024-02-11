@@ -27,4 +27,5 @@ public class TrainingSpecifications {
                 criteriaBuilder.equal(root.get("trainingDate"), trainingDate);
     }
 
+
 }

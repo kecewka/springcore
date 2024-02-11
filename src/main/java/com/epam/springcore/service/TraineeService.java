@@ -29,14 +29,14 @@ public interface TraineeService {
      *
      * @param trainee The trainee to be created.
      */
-    void createTrainee(Trainee trainee);
+    Trainee createTrainee(Trainee trainee);
 
     /**
      * Updates the information of an existing trainee.
      *
      * @param trainee The trainee with updated information.
      */
-    void updateTrainee(Trainee trainee);
+    Trainee updateTrainee(Trainee trainee);
 
     /**
      * Deletes a trainee by their unique identifier.
@@ -99,4 +99,12 @@ public interface TraineeService {
      * @param id The unique identifier of the trainee.
      */
     void deactivateTrainee(Long id);
+
+    /**
+     * Retrieves a list of trainers by username of user.
+     *
+     * @param username The username of the trainee.
+     * @return The list of Trainers
+     */
+    List<Trainer> findTrainersList(String username);
 }

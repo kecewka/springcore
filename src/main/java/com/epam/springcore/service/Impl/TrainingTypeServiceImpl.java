@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.transaction.annotation.Propagation;
 
 import java.util.List;
 
@@ -26,16 +25,14 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
 
     @Override
     public List<TrainingType> findAllTrainingTypes() {
+        LOGGER.info("Getting all training types");
         return trainingTypeRepository.findAll();
     }
 
     @Override
     @Transactional
     public TrainingType findByName(String name) {
-        LOGGER.info("------------------------------------ Searching ----------------------------");
-        TrainingType trainingType = trainingTypeRepository.findByName(name).orElseThrow();
-        LOGGER.info("------------------" +  trainingType.getName());
-        trainingType.getTrainers().size();
-        return trainingType;
+        LOGGER.info("Finding training with name: {}", name);
+        return trainingTypeRepository.findByName(name).orElseThrow();
     }
 }
