@@ -1,9 +1,11 @@
 package com.epam.springcore.controller;
 
 import com.epam.springcore.dto.trainee.*;
+import com.epam.springcore.dto.trainer.TraineesTrainerResponseDTO;
 import com.epam.springcore.dto.training.TraineeTrainingResponseDTO;
 import com.epam.springcore.dto.training.TraineeTrainingCriteriaDTO;
 import com.epam.springcore.dto.user.UsernameAndPasswordDTO;
+import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.mapper.Trainee.TraineeMapper;
 import com.epam.springcore.mapper.Trainer.TrainerListMapper;
 import com.epam.springcore.mapper.Training.TrainingListMapper;
@@ -40,8 +42,8 @@ public class TraineeController {
     }
 
     @PutMapping("/trainees")
-    public TraineeResponseDTO updateTrainee(@RequestBody TraineeUpdateDTO traineeUpdateDTO) {
-        return traineeMapper.traineeToResponseDTO(traineeService.updateTrainee(traineeMapper.updateDTOtoTrainee(traineeUpdateDTO)));
+    public TraineeUpdateResponseDTO updateTrainee(@RequestBody TraineeUpdateRequestDTO traineeUpdateRequestDTO) {
+        return traineeMapper.traineeToUpdateResponseDTO(traineeService.updateTrainee(traineeMapper.updateDTOtoTrainee(traineeUpdateRequestDTO)));
     }
 
     @DeleteMapping("/trainee/{username}")
@@ -59,11 +61,10 @@ public class TraineeController {
         traineeService.deactivateTrainee(traineeService.findTraineeByUsername(activationDTO.getUsername()).getId());
     }
 
-//    @PutMapping("trainees/trainers")
-//    public List<TraineesTrainerResponseDTO> updateTrainersList(@RequestBody TraineeUpdateTrainerListDTO dto) {
-//        traineeService.updateTraineesTrainerList(traineeMapper.updateTrainerListDTOtoTrainee(dto));
-//        return trainerMapper.trainerToTraineesResponseDTOList(traineeService.findTrainersList(dto.getUsername()));
-//    }
+    @PutMapping("trainees/trainers")
+    public List<TraineesTrainerResponseDTO> updateTrainersList(@RequestBody TraineeUpdateTrainerListDTO dto) {
+        return trainerMapper.trainerToTraineesResponseDTOList(traineeService.updateTraineesTrainerList(dto.getUsername(), dto.getTrainers()));
+    }
 
     @GetMapping("/trainees/trainings")
     public List<TraineeTrainingResponseDTO> getTraineesTrainingList(@RequestBody TraineeTrainingCriteriaDTO dto) {

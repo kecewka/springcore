@@ -1,25 +1,27 @@
-package com.epam.springcore.dto.trainee;
+package com.epam.springcore.dto.trainer;
 
-import java.time.LocalDate;
+import com.epam.springcore.dto.trainee.TrainersTraineeDTO;
 
-public class TraineeUpdateDTO {
+import java.util.List;
+
+public class TrainerUpdateResponseDTO {
     private String username;
     private String firstName;
     private String lastName;
-    private LocalDate dateOfBirth;
-    private String address;
+    private Long specialization;
     private boolean isActive;
+    private List<TrainersTraineeDTO> trainees;
 
-    public TraineeUpdateDTO() {
+    public TrainerUpdateResponseDTO() {
     }
 
-    public TraineeUpdateDTO(String username, String firstName, String lastName, LocalDate dateOfBirth, String address, boolean isActive) {
+    public TrainerUpdateResponseDTO(String username, String firstName, String lastName, Long specialization, boolean isActive, List<TrainersTraineeDTO> trainees) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
+        this.specialization = specialization;
         this.isActive = isActive;
+        this.trainees = trainees;
     }
 
     public String getUsername() {
@@ -46,20 +48,12 @@ public class TraineeUpdateDTO {
         this.lastName = lastName;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+    public Long getSpecialization() {
+        return specialization;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setSpecialization(Long specialization) {
+        this.specialization = specialization;
     }
 
     public boolean isActive() {
@@ -68,5 +62,13 @@ public class TraineeUpdateDTO {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public List<TrainersTraineeDTO> getTrainees() {
+        return trainees;
+    }
+
+    public void setTrainees(List<TrainersTraineeDTO> trainees) {
+        this.trainees = trainees;
     }
 }

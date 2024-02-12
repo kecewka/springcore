@@ -71,10 +71,11 @@ public interface TraineeService {
     /**
      * Updates the list of trainers for a specific trainee.
      *
-     * @param id           The unique identifier of the trainee.
-     * @param trainersList The updated list of trainers for the trainee.
+     * @param username The username of Trainee.
+     * @param trainers The trainers list.
+     * @return List of trianers
      */
-    void updateTraineesTrainerList(Long id, List<Trainer> trainersList);
+    List<Trainer> updateTraineesTrainerList(String username, List<String> trainers);
 
     /**
      * Changes the password for a specific trainee.
@@ -98,11 +99,4 @@ public interface TraineeService {
      */
     void deactivateTrainee(Long id);
 
-    /**
-     * Retrieves a list of trainers by username of user.
-     *
-     * @param username The username of the trainee.
-     * @return The list of Trainers
-     */
-    List<Trainer> findTrainersList(String username);
 }

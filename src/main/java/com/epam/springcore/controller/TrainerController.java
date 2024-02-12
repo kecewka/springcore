@@ -1,9 +1,7 @@
 package com.epam.springcore.controller;
 
 import com.epam.springcore.dto.trainee.ActivationDTO;
-import com.epam.springcore.dto.trainer.NotAssignedTrainerResponseDTO;
-import com.epam.springcore.dto.trainer.TrainerRegistrationDTO;
-import com.epam.springcore.dto.trainer.TrainerResponseDTO;
+import com.epam.springcore.dto.trainer.*;
 import com.epam.springcore.dto.training.TrainerTrainingCriteriaDTO;
 import com.epam.springcore.dto.training.TrainerTrainingResponseDTO;
 import com.epam.springcore.dto.user.UsernameAndPasswordDTO;
@@ -39,8 +37,13 @@ public class TrainerController {
     }
 
     @PostMapping("/trainers")
-    public UsernameAndPasswordDTO addTrainer(@RequestBody TrainerRegistrationDTO trainerRegistrationDTO){
+    public UsernameAndPasswordDTO addTrainer(@RequestBody TrainerRegistrationDTO trainerRegistrationDTO) {
         return trainerMapper.registrationResponse(trainerService.createTrainer(trainerMapper.registrationDTOtoTrainer(trainerRegistrationDTO)));
+    }
+
+    @PutMapping("/trainers")
+    public TrainerUpdateResponseDTO updateTrainer(@RequestBody TrainerUpdateRequestDTO trainerUpdateRequestDTO) {
+        return trainerMapper.trainerToUpdateResponseDTO(trainerService.updateTrainer(trainerMapper.updateDTOtoTrainer(trainerUpdateRequestDTO)));
     }
 
     @GetMapping("/trainers")
@@ -54,12 +57,12 @@ public class TrainerController {
     }
 
     @PatchMapping("/trainers/activate")
-    public void activateTrainer(@RequestBody ActivationDTO activationDTO){
+    public void activateTrainer(@RequestBody ActivationDTO activationDTO) {
         trainerService.activateTrainer(trainerService.findTrainerByUsername(activationDTO.getUsername()).getId());
     }
 
     @PatchMapping("/trainers/deactivate")
-    public void deactivateTrainer(@RequestBody ActivationDTO activationDTO){
+    public void deactivateTrainer(@RequestBody ActivationDTO activationDTO) {
         trainerService.deactivateTrainer(trainerService.findTrainerByUsername(activationDTO.getUsername()).getId());
     }
 }

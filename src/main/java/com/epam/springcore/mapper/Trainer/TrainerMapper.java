@@ -1,10 +1,7 @@
 package com.epam.springcore.mapper.Trainer;
 
 import com.epam.springcore.dto.trainee.TrainersTraineeDTO;
-import com.epam.springcore.dto.trainer.NotAssignedTrainerResponseDTO;
-import com.epam.springcore.dto.trainer.TraineesTrainerResponseDTO;
-import com.epam.springcore.dto.trainer.TrainerRegistrationDTO;
-import com.epam.springcore.dto.trainer.TrainerResponseDTO;
+import com.epam.springcore.dto.trainer.*;
 import com.epam.springcore.dto.user.UsernameAndPasswordDTO;
 import com.epam.springcore.entity.Trainee;
 import com.epam.springcore.entity.Trainer;
@@ -42,7 +39,7 @@ public abstract class TrainerMapper {
     }
 
     @Named("LongToSpecialization")
-    protected TrainingType mapLongToSpecialization(Long id){
+    protected TrainingType mapLongToSpecialization(Long id) {
         return trainingTypeService.findById(id);
     }
 
@@ -72,4 +69,22 @@ public abstract class TrainerMapper {
     @Mapping(source = "user.username", target = "username")
     @Mapping(source = "user.password", target = "password")
     public abstract UsernameAndPasswordDTO registrationResponse(Trainer trainer);
+
+    @Mapping(source = "username", target = "user.username")
+    @Mapping(source = "firstName", target = "user.firstName")
+    @Mapping(source = "lastName", target = "user.lastName")
+    @Mapping(source = "specialization", target = "specialization", qualifiedByName = "LongToSpecialization")
+    @Mapping(source = "active", target = "user.active")
+    public abstract Trainer updateDTOtoTrainer(TrainerUpdateRequestDTO trainerUpdateRequestDTO);
+
+    @Mapping(source = "user.username", target = "username")
+    @Mapping(source = "user.firstName", target = "firstName")
+    @Mapping(source = "user.lastName", target = "lastName")
+    @Mapping(source = "specialization", target = "specialization", qualifiedByName = "mapSpecializationToLong")
+    @Mapping(source = "user.active", target = "active")
+    @Mapping(source = "trainees", target = "trainees")
+    public abstract TrainerUpdateResponseDTO trainerToUpdateResponseDTO(Trainer trainer);
+
+
 }
+

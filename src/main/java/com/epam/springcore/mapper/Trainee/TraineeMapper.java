@@ -1,7 +1,6 @@
 package com.epam.springcore.mapper.Trainee;
 
 import com.epam.springcore.dto.trainee.*;
-import com.epam.springcore.dto.trainer.TraineesTrainerResponseDTO;
 import com.epam.springcore.dto.user.UsernameAndPasswordDTO;
 import com.epam.springcore.entity.Trainee;
 import com.epam.springcore.entity.Trainer;
@@ -13,6 +12,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
@@ -50,16 +51,16 @@ public abstract class TraineeMapper {
     @Mapping(source = "dateOfBirth", target = "dateOfBirth")
     @Mapping(source = "address", target = "address")
     @Mapping(source = "active", target = "user.active")
-    public abstract Trainee updateDTOtoTrainee(TraineeUpdateDTO traineeUpdateDTO);
+    public abstract Trainee updateDTOtoTrainee(TraineeUpdateRequestDTO traineeUpdateRequestDTO);
 
-//    @Mapping(source = "username", target = "user.username")
-//    @Mapping(source = "trainers", target = "trainers", qualifiedByName = "StringToTrainers")
-//    public abstract Trainee updateTrainerListDTOtoTrainee(TraineeUpdateTrainerListDTO trainerListDTO);
-
-    @Named("StringToTrainers")
-    protected Trainer StringToTrainer(String username){
-        return trainerService.findTrainerByUsername(username);
-    }
+    @Mapping(source = "user.username", target = "username")
+    @Mapping(source = "user.firstName", target = "firstName")
+    @Mapping(source = "user.lastName", target = "lastName")
+    @Mapping(source = "dateOfBirth", target = "dateOfBirth")
+    @Mapping(source = "address", target = "address")
+    @Mapping(source = "user.active", target = "active")
+    @Mapping(source = "trainers", target = "trainers")
+    public abstract TraineeUpdateResponseDTO traineeToUpdateResponseDTO(Trainee trainee);
 
 
 

@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.epam.springcore.repository.specifications.TrainingSpecifications.*;
@@ -78,13 +79,17 @@ public class TraineeServiceImpl implements TraineeService {
     @Transactional
     public Trainee updateTrainee(Trainee trainee) {
         LOGGER.info("Updating trainee: {}", trainee);
+        Trainee existingTrainee = findTraineeByUsername(trainee.getUser().getUsername());
+        existingTrainee.setAddress(trainee.getAddress());
+        existingTrainee.setDateOfBirth(trainee.getDateOfBirth());
+
         User updatedUser = trainee.getUser();
-        User user = userService.findUserByUsername(trainee.getUser().getUsername());
-        user.setFirstName(updatedUser.getFirstName());
-        user.setLastName(updatedUser.getLastName());
-        user.setActive(updatedUser.isActive());
-        trainee.setUser(user);
-        return traineeRepository.save(trainee);
+        User existingUser = existingTrainee.getUser();
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setActive(updatedUser.isActive());
+
+        return traineeRepository.save(existingTrainee);
     }
 
     @Override
@@ -139,11 +144,23 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Override
     @Transactional
-    public void updateTraineesTrainerList(Long id, List<Trainer> trainersList) {
-        LOGGER.info("updating trainer list of trainee with id: {}", id);
-        Trainee trainee = findTraineeById(id);
-        trainee.setTrainers(trainersList);
-        updateTrainee(trainee);
+    public List<Trainer> updateTraineesTrainerList(String username, List<String> trainers) {
+        LOGGER.info("updating trainer list of trainee with username: {}", username);
+        List<Trainer> convertedTrainers = new ArrayList<>();
+        for (String s : trainers) {
+            convertedTrainers.add(trainerService.findTrainerByUsername(s));
+        }
+        Trainee existingTrainee = findTraineeByUsername(username);
+        existingTrainee.setTrainers(convertedTrainers);
+        updateTrainee(existingTrainee);
+
+        List<Trainer> responseTrainers = new ArrayList<>();
+        List<Long> trainerIds = traineeRepository.findTrainersByTrainerId(existingTrainee.getId());
+        for (Long l : trainerIds) {
+            responseTrainers.add(trainerService.findTrainerById(l));
+        }
+
+        return responseTrainers;
     }
 
     @Override
@@ -173,9 +190,4 @@ public class TraineeServiceImpl implements TraineeService {
         updateTrainee(trainee);
     }
 
-    @Override
-    @Transactional
-    public List<Trainer> findTrainersList(String username) {
-        return traineeRepository.findTrainersById(findTraineeByUsername(username).getId());
-    }
 }

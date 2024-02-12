@@ -8,6 +8,7 @@ import com.epam.springcore.entity.Trainee;
 import com.epam.springcore.entity.Trainer;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
+import org.mapstruct.Named;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;

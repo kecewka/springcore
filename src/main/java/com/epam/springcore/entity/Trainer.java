@@ -3,6 +3,7 @@ package com.epam.springcore.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -24,8 +25,8 @@ public class Trainer {
     private List<Training> trainings;
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "trainee_trainer",
-    joinColumns = @JoinColumn(name = "trainer_id"),
-    inverseJoinColumns = @JoinColumn(name = "trainee_id"))
+            joinColumns = @JoinColumn(name = "trainer_id"),
+            inverseJoinColumns = @JoinColumn(name = "trainee_id"))
     private List<Trainee> trainees;
 
     public Trainer() {

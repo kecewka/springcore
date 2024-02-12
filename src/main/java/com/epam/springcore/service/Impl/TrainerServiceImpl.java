@@ -69,7 +69,16 @@ public class TrainerServiceImpl implements TrainerService {
     @Transactional
     public Trainer updateTrainer(Trainer trainer) {
         LOGGER.info("Updating trainer: {}", trainer);
-        return trainerRepository.save(trainer);
+        Trainer existingTrainer = findTrainerByUsername(trainer.getUser().getUsername());
+        existingTrainer.setSpecialization(trainer.getSpecialization());
+
+        User updatedUser = trainer.getUser();
+        User existingUser = existingTrainer.getUser();
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setActive(updatedUser.isActive());
+
+        return trainerRepository.save(existingTrainer);
     }
 
     @Override
