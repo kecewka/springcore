@@ -1,9 +1,6 @@
 package com.epam.springcore.mapper.Trainee;
 
-import com.epam.springcore.dto.trainee.TraineeResponseDTO;
-import com.epam.springcore.dto.trainee.TraineeRegistrationDTO;
-import com.epam.springcore.dto.trainee.TraineeUpdateDTO;
-import com.epam.springcore.dto.trainee.TraineeUpdateTrainerListDTO;
+import com.epam.springcore.dto.trainee.*;
 import com.epam.springcore.dto.trainer.TraineesTrainerResponseDTO;
 import com.epam.springcore.dto.user.UsernameAndPasswordDTO;
 import com.epam.springcore.entity.Trainee;
@@ -55,14 +52,15 @@ public abstract class TraineeMapper {
     @Mapping(source = "active", target = "user.active")
     public abstract Trainee updateDTOtoTrainee(TraineeUpdateDTO traineeUpdateDTO);
 
-    @Mapping(source = "username", target = "user.username")
-    @Mapping(source = "trainers", target = "trainers", qualifiedByName = "StringToTrainers")
-    public abstract Trainee updateTrainerListDTOtoTrainee(TraineeUpdateTrainerListDTO trainerListDTO);
+//    @Mapping(source = "username", target = "user.username")
+//    @Mapping(source = "trainers", target = "trainers", qualifiedByName = "StringToTrainers")
+//    public abstract Trainee updateTrainerListDTOtoTrainee(TraineeUpdateTrainerListDTO trainerListDTO);
 
     @Named("StringToTrainers")
     protected Trainer StringToTrainer(String username){
         return trainerService.findTrainerByUsername(username);
     }
+
 
 
 }

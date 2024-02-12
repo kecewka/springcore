@@ -2,17 +2,17 @@ package com.epam.springcore.dto.training;
 
 import java.time.LocalDate;
 
-public class TrainingCriteriaDTO {
+public class TraineeTrainingCriteriaDTO {
     private String username;
     private LocalDate from;
     private LocalDate to;
     private String trainerName;
     private String trainingType;
 
-    public TrainingCriteriaDTO() {
+    public TraineeTrainingCriteriaDTO() {
     }
 
-    public TrainingCriteriaDTO(String username, LocalDate from, LocalDate to, String trainerName, String trainingType) {
+    public TraineeTrainingCriteriaDTO(String username, LocalDate from, LocalDate to, String trainerName, String trainingType) {
         this.username = username;
         this.from = from;
         this.to = to;

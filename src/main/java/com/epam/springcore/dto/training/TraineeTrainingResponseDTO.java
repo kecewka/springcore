@@ -4,17 +4,17 @@ import com.epam.springcore.dto.TrainingType.TrainingTypeDTO;
 
 import java.time.LocalDate;
 
-public class TrainingResponseDTO {
+public class TraineeTrainingResponseDTO {
     private String trainingName;
     private LocalDate trainingDate;
     private TrainingTypeDTO trainingType;
     private Long trainingDuration;
     private String trainerName;
 
-    public TrainingResponseDTO() {
+    public TraineeTrainingResponseDTO() {
     }
 
-    public TrainingResponseDTO(String trainingName, LocalDate trainingDate, TrainingTypeDTO trainingType, Long trainingDuration, String trainerName) {
+    public TraineeTrainingResponseDTO(String trainingName, LocalDate trainingDate, TrainingTypeDTO trainingType, Long trainingDuration, String trainerName) {
         this.trainingName = trainingName;
         this.trainingDate = trainingDate;
         this.trainingType = trainingType;

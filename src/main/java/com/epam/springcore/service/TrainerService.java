@@ -1,5 +1,6 @@
 package com.epam.springcore.service;
 
+import com.epam.springcore.dto.training.TrainerTrainingCriteriaDTO;
 import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.Training;
 
@@ -28,14 +29,14 @@ public interface TrainerService {
      *
      * @param trainer The trainer to be created.
      */
-    void createTrainer(Trainer trainer);
+    Trainer createTrainer(Trainer trainer);
 
     /**
      * Updates the information of an existing trainer.
      *
      * @param trainer The trainer with updated information.
      */
-    void updateTrainer(Trainer trainer);
+    Trainer updateTrainer(Trainer trainer);
 
     /**
      * Deletes a trainer by their unique identifier.
@@ -62,12 +63,10 @@ public interface TrainerService {
     /**
      * Retrieves the training list for a trainer based on username, training name, and date.
      *
-     * @param username     The username of the trainer.
-     * @param trainingName The name of the training.
-     * @param trainingDate The date of the training.
+     * @param trainerTrainingCriteriaDTO The DTO containing criterias.
      * @return A list of trainings that match the criteria.
      */
-    List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName, LocalDate trainingDate);
+    List<Training> findTrainingByUsernameAndCriteria(TrainerTrainingCriteriaDTO trainerTrainingCriteriaDTO);
 
     /**
      * Changes the password for a specific trainer.

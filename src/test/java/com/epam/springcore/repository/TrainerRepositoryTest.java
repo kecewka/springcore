@@ -25,7 +25,8 @@ public class TrainerRepositoryTest {
 
     @Autowired
     private TrainerRepository trainerRepository;
-    @Autowired TraineeRepository traineeRepository;
+    @Autowired
+    private TraineeRepository traineeRepository;
 
     @Before
     public void setUp() {

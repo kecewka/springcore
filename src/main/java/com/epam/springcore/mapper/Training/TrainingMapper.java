@@ -1,6 +1,8 @@
 package com.epam.springcore.mapper.Training;
 
+import com.epam.springcore.dto.training.TrainerTrainingResponseDTO;
 import com.epam.springcore.dto.training.TrainingPostDTO;
+import com.epam.springcore.dto.training.TraineeTrainingResponseDTO;
 import com.epam.springcore.entity.Trainee;
 import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.Training;
@@ -33,6 +35,29 @@ public abstract class TrainingMapper {
     @Mapping(source = "trainingDuration", target = "trainingDuration")
     @Mapping(source = "trainingTypeName", target = "trainingType", qualifiedByName = "nameToTrainingType")
     public abstract Training dtoToTraining(TrainingPostDTO dto);
+
+    @Mapping(source = "trainingName", target = "trainingName")
+    @Mapping(source = "trainingDate", target = "trainingDate")
+    @Mapping(source = "trainingType", target = "trainingType")
+    @Mapping(source = "trainingDuration", target = "trainingDuration")
+    @Mapping(source = "trainer", target = "trainerName", qualifiedByName = "trainerToName")
+    public abstract TraineeTrainingResponseDTO trainingToDto(Training training);
+
+    @Mapping(source = "trainingName", target = "trainingName")
+    @Mapping(source = "trainingDate", target = "trainingDate")
+    @Mapping(source = "trainingType", target = "trainingType")
+    @Mapping(source = "trainingDuration", target = "trainingDuration")
+    @Mapping(source = "trainee", target = "traineeName", qualifiedByName = "traineeToName")
+    public abstract TrainerTrainingResponseDTO trainingToTrainerDto(Training training);
+
+    @Named("traineeToName")
+    protected String mapTraineeToString(Trainee trainee) {
+        return trainee.getUser().getFirstName() + " " + trainee.getUser().getLastName();
+    }
+    @Named("trainerToName")
+    protected String mapTrainerToString(Trainer trainer) {
+        return trainer.getUser().getFirstName() + " " + trainer.getUser().getLastName();
+    }
 
     @Named("usernameToTrainee")
     protected Trainee mapTraineeUsernameToTrainee(String username) {

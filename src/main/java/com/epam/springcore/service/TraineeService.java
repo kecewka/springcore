@@ -1,10 +1,10 @@
 package com.epam.springcore.service;
 
+import com.epam.springcore.dto.training.TraineeTrainingCriteriaDTO;
 import com.epam.springcore.entity.Trainee;
 import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.Training;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface TraineeService {
@@ -63,12 +63,10 @@ public interface TraineeService {
     /**
      * Retrieves the training list for a trainee based on username, training name, and date.
      *
-     * @param username     The username of the trainee.
-     * @param trainingName The name of the training.
-     * @param trainingDate The date of the training.
+     * @param traineeTrainingCriteriaDTO The DTO containing criterias.
      * @return A list of trainings that match the criteria.
      */
-    List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName, LocalDate trainingDate);
+    List<Training> findTrainingByUsernameAndCriteria(TraineeTrainingCriteriaDTO traineeTrainingCriteriaDTO);
 
     /**
      * Updates the list of trainers for a specific trainee.

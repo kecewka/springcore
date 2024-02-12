@@ -1,5 +1,6 @@
 package com.epam.springcore.service.Impl;
 
+import com.epam.springcore.dto.training.TraineeTrainingCriteriaDTO;
 import com.epam.springcore.entity.Trainee;
 import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.Training;
@@ -8,6 +9,7 @@ import com.epam.springcore.exception.TraineeNotFoundException;
 import com.epam.springcore.repository.TraineeRepository;
 import com.epam.springcore.repository.TrainingRepository;
 import com.epam.springcore.service.TraineeService;
+import com.epam.springcore.service.TrainerService;
 import com.epam.springcore.service.UserService;
 import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
@@ -15,9 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import static com.epam.springcore.repository.specifications.TrainingSpecifications.*;
 
@@ -27,13 +27,15 @@ public class TraineeServiceImpl implements TraineeService {
     private final TraineeRepository traineeRepository;
     private final TrainingRepository trainingRepository;
     private final UserService userService;
+    private final TrainerService trainerService;
     private static final Logger LOGGER = LogManager.getLogger(TraineeServiceImpl.class);
 
     @Autowired
-    public TraineeServiceImpl(TraineeRepository traineeRepository, TrainingRepository trainingRepository, UserService userService) {
+    public TraineeServiceImpl(TraineeRepository traineeRepository, TrainingRepository trainingRepository, UserService userService, TrainerService trainerService) {
         this.traineeRepository = traineeRepository;
         this.trainingRepository = trainingRepository;
         this.userService = userService;
+        this.trainerService = trainerService;
     }
 
 
@@ -103,23 +105,34 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Override
     @Transactional
-    public List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName, LocalDate trainingDate) {
+    public List<Training> findTrainingByUsernameAndCriteria(TraineeTrainingCriteriaDTO dto) {
         LOGGER.info("finding training by username and criteria");
-        Trainee trainee = findTraineeByUsername(username);
-        if (trainingName == null && trainingDate == null) {
+        Trainee trainee = findTraineeByUsername(dto.getUsername());
+
+        if (dto.getTrainingType() == null && dto.getFrom() == null && dto.getTo() == null && dto.getTrainerName() == null) {
             return trainingRepository.findAll(hasTraineeId(trainee.getId()));
         }
-        if (trainingName == null) {
+        if (dto.getTrainingType() == null && dto.getTo() == null && dto.getTrainerName() == null) {
             return trainingRepository.findAll(hasTraineeId(trainee.getId())
-                    .and(hasTrainingDate(trainingDate)));
+                    .and(hasTrainingDateAfter(dto.getFrom())));
         }
-        if (trainingDate == null) {
+        if (dto.getTrainingType() == null && dto.getFrom() == null && dto.getTrainerName() == null) {
             return trainingRepository.findAll(hasTraineeId(trainee.getId())
-                    .and(hasTrainingName(trainingName)));
+                    .and(hasTrainingDateBefore(dto.getTo())));
+        }
+        if (dto.getTrainingType() == null && dto.getTrainerName() == null) {
+            return trainingRepository.findAll(hasTraineeId(trainee.getId())
+                    .and(hasTrainingDateBetween(dto.getFrom(), dto.getTo())));
+        }
+        if (dto.getTrainingType() == null && dto.getFrom() == null && dto.getTo() == null) {
+            Trainer trainer = trainerService.findTrainerByUsername(dto.getTrainerName());
+            return trainingRepository.findAll(hasTraineeId(trainee.getId())
+                    .and(hasTrainerId(trainer.getId())));
         }
         return trainingRepository.findAll(hasTraineeId(trainee.getId())
-                .and(hasTrainingName(trainingName))
-                .and(hasTrainingDate(trainingDate)));
+                .and(hasTrainingType(dto.getTrainingType()))
+                .and(hasTrainingDateBetween(dto.getFrom(), dto.getTo()))
+                .and(hasTrainerId(trainerService.findTrainerByUsername(dto.getTrainerName()).getId())));
 
     }
 

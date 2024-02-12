@@ -1,13 +1,12 @@
 package com.epam.springcore.controller;
 
 import com.epam.springcore.dto.trainee.*;
-import com.epam.springcore.dto.trainer.TraineesTrainerResponseDTO;
-import com.epam.springcore.dto.training.TrainingCriteriaDTO;
-import com.epam.springcore.dto.training.TrainingResponseDTO;
+import com.epam.springcore.dto.training.TraineeTrainingResponseDTO;
+import com.epam.springcore.dto.training.TraineeTrainingCriteriaDTO;
 import com.epam.springcore.dto.user.UsernameAndPasswordDTO;
 import com.epam.springcore.mapper.Trainee.TraineeMapper;
 import com.epam.springcore.mapper.Trainer.TrainerListMapper;
-import com.epam.springcore.mapper.Trainer.TrainerMapper;
+import com.epam.springcore.mapper.Training.TrainingListMapper;
 import com.epam.springcore.service.TraineeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +19,14 @@ public class TraineeController {
     private final TraineeService traineeService;
     private final TraineeMapper traineeMapper;
     private final TrainerListMapper trainerMapper;
+    private final TrainingListMapper trainingMapper;
 
     @Autowired
-    public TraineeController(TraineeService traineeService, TraineeMapper traineeMapper, TrainerListMapper trainerMapper) {
+    public TraineeController(TraineeService traineeService, TraineeMapper traineeMapper, TrainerListMapper trainerMapper, TrainingListMapper trainingMapper) {
         this.traineeService = traineeService;
         this.traineeMapper = traineeMapper;
         this.trainerMapper = trainerMapper;
+        this.trainingMapper = trainingMapper;
     }
 
     @GetMapping("/trainees/{username}")
@@ -64,8 +65,9 @@ public class TraineeController {
 //        return trainerMapper.trainerToTraineesResponseDTOList(traineeService.findTrainersList(dto.getUsername()));
 //    }
 
-//    @GetMapping("/trainees/trainings")
-//    public TrainingResponseDTO getTraineesTrainingList(@RequestBody TrainingCriteriaDTO dto) {
-//        return traineeService.findTrainingByUsernameAndCriteria()
-//    }
+    @GetMapping("/trainees/trainings")
+    public List<TraineeTrainingResponseDTO> getTraineesTrainingList(@RequestBody TraineeTrainingCriteriaDTO dto) {
+        return trainingMapper.trainingListToDto(traineeService.findTrainingByUsernameAndCriteria(dto));
+
+    }
 }

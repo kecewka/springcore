@@ -1,11 +1,16 @@
 package com.epam.springcore.service.Impl;
 
+import com.epam.springcore.dto.training.TraineeTrainingCriteriaDTO;
+import com.epam.springcore.dto.training.TrainerTrainingCriteriaDTO;
+import com.epam.springcore.entity.Trainee;
 import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.Training;
 import com.epam.springcore.entity.User;
 import com.epam.springcore.exception.TrainerNotFoundException;
+import com.epam.springcore.repository.TraineeRepository;
 import com.epam.springcore.repository.TrainerRepository;
 import com.epam.springcore.repository.TrainingRepository;
+import com.epam.springcore.service.TraineeService;
 import com.epam.springcore.service.TrainerService;
 import com.epam.springcore.service.UserService;
 import jakarta.transaction.Transactional;
@@ -25,13 +30,15 @@ import static com.epam.springcore.repository.specifications.TrainingSpecificatio
 public class TrainerServiceImpl implements TrainerService {
     private final TrainerRepository trainerRepository;
     private final TrainingRepository trainingRepository;
+    private final TraineeRepository traineeRepository;
     private final UserService userService;
     private static final Logger LOGGER = LogManager.getLogger(TrainerServiceImpl.class);
 
     @Autowired
-    public TrainerServiceImpl(TrainerRepository trainerRepository, TrainingRepository trainingRepository, UserService userService) {
+    public TrainerServiceImpl(TrainerRepository trainerRepository, TrainingRepository trainingRepository, TraineeRepository traineeRepository, UserService userService) {
         this.trainerRepository = trainerRepository;
         this.trainingRepository = trainingRepository;
+        this.traineeRepository = traineeRepository;
         this.userService = userService;
     }
 
@@ -52,17 +59,17 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     @Transactional
-    public void createTrainer(Trainer trainer) {
+    public Trainer createTrainer(Trainer trainer) {
         LOGGER.info("Creating trainer: {}", trainer);
         userService.createUser(trainer.getUser());
-        trainerRepository.save(trainer);
+        return trainerRepository.save(trainer);
     }
 
     @Override
     @Transactional
-    public void updateTrainer(Trainer trainer) {
+    public Trainer updateTrainer(Trainer trainer) {
         LOGGER.info("Updating trainer: {}", trainer);
-        trainerRepository.save(trainer);
+        return trainerRepository.save(trainer);
     }
 
     @Override
@@ -92,23 +99,34 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     @Transactional
-    public List<Training> findTrainingByUsernameAndCriteria(String username, String trainingName, LocalDate trainingDate) {
+    public List<Training> findTrainingByUsernameAndCriteria(TrainerTrainingCriteriaDTO dto) {
         LOGGER.info("finding training by username and criteria");
-        Trainer trainer = findTrainerByUsername(username);
-        if (trainingName == null && trainingDate == null) {
+        Trainer trainer = findTrainerByUsername(dto.getUsername());
+
+        if (dto.getFrom() == null && dto.getTo() == null && dto.getTraineeName() == null) {
             return trainingRepository.findAll(hasTrainerId(trainer.getId()));
         }
-        if (trainingName == null) {
+        if (dto.getTo() == null && dto.getTraineeName() == null) {
             return trainingRepository.findAll(hasTrainerId(trainer.getId())
-                    .and(hasTrainingDate(trainingDate)));
+                    .and(hasTrainingDateAfter(dto.getFrom())));
         }
-        if (trainingDate == null) {
+        if (dto.getFrom() == null && dto.getTraineeName() == null) {
             return trainingRepository.findAll(hasTrainerId(trainer.getId())
-                    .and(hasTrainingName(trainingName)));
+                    .and(hasTrainingDateBefore(dto.getTo())));
+        }
+        if (dto.getTraineeName() == null) {
+            return trainingRepository.findAll(hasTrainerId(trainer.getId())
+                    .and(hasTrainingDateBetween(dto.getFrom(), dto.getTo())));
+        }
+        if (dto.getFrom() == null && dto.getTo() == null) {
+            Trainee trainee = traineeRepository.findByUserId(userService.findUserByUsername(dto.getUsername()).getId()).get();
+            return trainingRepository.findAll(hasTrainerId(trainer.getId())
+                    .and(hasTraineeId(trainee.getId())));
         }
         return trainingRepository.findAll(hasTrainerId(trainer.getId())
-                .and(hasTrainingName(trainingName))
-                .and(hasTrainingDate(trainingDate)));
+                .and(hasTrainingDateBetween(dto.getFrom(), dto.getTo()))
+                .and(hasTraineeId(traineeRepository.findByUserId(userService.findUserByUsername(dto.getUsername()).getId()).get().getId())));
+
     }
 
     @Override
@@ -142,6 +160,8 @@ public class TrainerServiceImpl implements TrainerService {
     @Transactional
     public List<Trainer> getNotAssignedAndActiveTrainers() {
         LOGGER.info("finding all active trainers without trainees");
-        return trainerRepository.findAllActiveTrainersWithoutTrainees();
+        List<Trainer> list = trainerRepository.findAllActiveTrainersWithoutTrainees();
+        System.out.println(list);
+        return list;
     }
 }

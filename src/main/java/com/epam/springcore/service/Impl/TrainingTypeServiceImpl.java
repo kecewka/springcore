@@ -35,4 +35,9 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
         LOGGER.info("Finding training with name: {}", name);
         return trainingTypeRepository.findByName(name).orElseThrow();
     }
+
+    @Override
+    public TrainingType findById(Long id) {
+        return trainingTypeRepository.findById(id).orElseThrow();
+    }
 }

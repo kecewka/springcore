@@ -25,11 +25,12 @@ public interface TrainerRepository extends JpaRepository<Trainer, Long> {
      * It filters results to include only active users and trainers who are not assigned to any trainees.
      * @return A list of active trainers without assigned trainees.
      */
-    @Query(value = "SELECT t.id AS trainer_id, t.specialization, t.user_id AS trainer_user_id, " +
+    @Query(value = "SELECT t.id AS id, t.specialization, t.user_id AS trainer_user_id, " +
             "u.id AS user_id, u.first_name, u.is_active, u.last_name, u.password, u.username " +
             "FROM trainers t " +
             "JOIN users u ON t.user_id = u.id " +
             "WHERE u.is_active = true " +
             "AND t.id NOT IN (SELECT trainer_id FROM trainee_trainer)", nativeQuery = true)
     List<Trainer> findAllActiveTrainersWithoutTrainees();
+
 }

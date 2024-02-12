@@ -20,4 +20,12 @@ public interface TrainingTypeService {
      * @return The Training type with the specified name, or null if not found.
      */
     public TrainingType findByName(String name);
+
+    /**
+     * Retrieves a training type by their ID.
+     *
+     * @param id The ID of the training type.
+     * @return The Training type with the specified name, or null if not found.
+     */
+    public TrainingType findById(Long id);
 }
