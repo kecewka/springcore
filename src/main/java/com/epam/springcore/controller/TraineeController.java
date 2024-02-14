@@ -4,12 +4,13 @@ import com.epam.springcore.dto.trainee.*;
 import com.epam.springcore.dto.trainer.TraineesTrainerResponseDTO;
 import com.epam.springcore.dto.training.TraineeTrainingResponseDTO;
 import com.epam.springcore.dto.training.TraineeTrainingCriteriaDTO;
+import com.epam.springcore.dto.user.ActivationDTO;
 import com.epam.springcore.dto.user.UsernameAndPasswordDTO;
-import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.mapper.Trainee.TraineeMapper;
 import com.epam.springcore.mapper.Trainer.TrainerListMapper;
 import com.epam.springcore.mapper.Training.TrainingListMapper;
 import com.epam.springcore.service.TraineeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,37 +38,37 @@ public class TraineeController {
     }
 
     @PostMapping("/trainees")
-    public UsernameAndPasswordDTO addTrainee(@RequestBody TraineeRegistrationDTO traineeRegistrationDTO) {
+    public UsernameAndPasswordDTO addTrainee(@RequestBody @Valid TraineeRegistrationDTO traineeRegistrationDTO) {
         return traineeMapper.registrationResponse(traineeService.createTrainee(traineeMapper.registrationDTOtoTrainee(traineeRegistrationDTO)));
     }
 
     @PutMapping("/trainees")
-    public TraineeUpdateResponseDTO updateTrainee(@RequestBody TraineeUpdateRequestDTO traineeUpdateRequestDTO) {
+    public TraineeUpdateResponseDTO updateTrainee(@RequestBody @Valid TraineeUpdateRequestDTO traineeUpdateRequestDTO) {
         return traineeMapper.traineeToUpdateResponseDTO(traineeService.updateTrainee(traineeMapper.updateDTOtoTrainee(traineeUpdateRequestDTO)));
     }
 
-    @DeleteMapping("/trainee/{username}")
+    @DeleteMapping("/trainees/{username}")
     public void deleteTrainee(@PathVariable String username) {
         traineeService.deleteTraineeByUsername(username);
     }
 
     @PatchMapping("trainees/activate")
-    public void activateTrainee(@RequestBody ActivationDTO activationDTO) {
+    public void activateTrainee(@RequestBody @Valid ActivationDTO activationDTO) {
         traineeService.activateTrainee(traineeService.findTraineeByUsername(activationDTO.getUsername()).getId());
     }
 
     @PatchMapping("trainees/deactivate")
-    public void deactivateTrainee(@RequestBody ActivationDTO activationDTO) {
+    public void deactivateTrainee(@RequestBody @Valid ActivationDTO activationDTO) {
         traineeService.deactivateTrainee(traineeService.findTraineeByUsername(activationDTO.getUsername()).getId());
     }
 
     @PutMapping("trainees/trainers")
-    public List<TraineesTrainerResponseDTO> updateTrainersList(@RequestBody TraineeUpdateTrainerListDTO dto) {
+    public List<TraineesTrainerResponseDTO> updateTrainersList(@RequestBody @Valid TraineeUpdateTrainerListDTO dto) {
         return trainerMapper.trainerToTraineesResponseDTOList(traineeService.updateTraineesTrainerList(dto.getUsername(), dto.getTrainers()));
     }
 
     @GetMapping("/trainees/trainings")
-    public List<TraineeTrainingResponseDTO> getTraineesTrainingList(@RequestBody TraineeTrainingCriteriaDTO dto) {
+    public List<TraineeTrainingResponseDTO> getTraineesTrainingList(@RequestBody @Valid TraineeTrainingCriteriaDTO dto) {
         return trainingMapper.trainingListToDto(traineeService.findTrainingByUsernameAndCriteria(dto));
 
     }

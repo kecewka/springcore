@@ -1,6 +1,9 @@
-package com.epam.springcore.dto.trainee;
+package com.epam.springcore.dto.user;
+
+import jakarta.validation.constraints.NotBlank;
 
 public class ActivationDTO {
+    @NotBlank(message = "username is mandatory")
     public String username;
     public boolean isActive;
 

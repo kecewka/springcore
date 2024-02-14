@@ -1,9 +1,14 @@
 package com.epam.springcore.dto.trainee;
 
+import jakarta.validation.constraints.NotBlank;
+import org.antlr.v4.runtime.misc.NotNull;
+
 import java.time.LocalDate;
 
 public class TraineeRegistrationDTO {
+    @NotBlank(message = "First name is mandatory")
     private String firstName;
+    @NotBlank(message = "Last name is mandatory")
     private String lastName;
     private LocalDate dateOfBirth;
     private String address;

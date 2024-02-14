@@ -1,10 +1,17 @@
 package com.epam.springcore.dto.trainer;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class TrainerUpdateRequestDTO {
+    @NotBlank(message = "username is mandatory")
     private String username;
+    @NotBlank(message = "First name is mandatory")
     private String firstName;
+    @NotBlank(message = "Last name is mandatory")
     private String lastName;
     private Long specialization;
+    @NotNull
     private boolean isActive;
 
     public TrainerUpdateRequestDTO() {

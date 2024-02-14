@@ -1,14 +1,25 @@
 package com.epam.springcore.dto.training;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.time.LocalDate;
 
 public class TrainingPostDTO {
     private Long id;
+
+    @NotBlank(message = "Trainee username is mandatory")
     private String traineeUsername;
+    @NotBlank(message = "Trainer username is mandatory")
     private String trainerUsername;
+    @NotBlank(message = "Training name is mandatory")
     private String trainingName;
+    @NotNull(message = "Training date is mandatory")
     private LocalDate trainingDate;
+    @Positive
     private Long trainingDuration;
+    @NotBlank(message = "Training Type is mandatory")
     private String trainingTypeName;
 
     public TrainingPostDTO() {

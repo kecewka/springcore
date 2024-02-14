@@ -1,9 +1,14 @@
 package com.epam.springcore.dto.trainee;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 public class TraineeUpdateTrainerListDTO {
+    @NotBlank(message = "username is mandatory")
     private String username;
+    @NotNull
     private List<String> trainers;
 
     public TraineeUpdateTrainerListDTO() {

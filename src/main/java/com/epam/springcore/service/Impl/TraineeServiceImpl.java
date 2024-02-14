@@ -93,6 +93,7 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     @Override
+    @Transactional
     public void deleteTrainee(Long id) {
         LOGGER.info("Deleting trainee with ID: {}", id);
         traineeRepository.deleteById(id);

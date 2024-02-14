@@ -1,15 +1,15 @@
 package com.epam.springcore.controller;
 
-import com.epam.springcore.dto.trainee.ActivationDTO;
+import com.epam.springcore.dto.user.ActivationDTO;
 import com.epam.springcore.dto.trainer.*;
 import com.epam.springcore.dto.training.TrainerTrainingCriteriaDTO;
 import com.epam.springcore.dto.training.TrainerTrainingResponseDTO;
 import com.epam.springcore.dto.user.UsernameAndPasswordDTO;
-import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.mapper.Trainer.TrainerListMapper;
 import com.epam.springcore.mapper.Trainer.TrainerMapper;
 import com.epam.springcore.mapper.Training.TrainingListMapper;
 import com.epam.springcore.service.TrainerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,12 +37,12 @@ public class TrainerController {
     }
 
     @PostMapping("/trainers")
-    public UsernameAndPasswordDTO addTrainer(@RequestBody TrainerRegistrationDTO trainerRegistrationDTO) {
+    public UsernameAndPasswordDTO addTrainer(@RequestBody @Valid TrainerRegistrationDTO trainerRegistrationDTO) {
         return trainerMapper.registrationResponse(trainerService.createTrainer(trainerMapper.registrationDTOtoTrainer(trainerRegistrationDTO)));
     }
 
     @PutMapping("/trainers")
-    public TrainerUpdateResponseDTO updateTrainer(@RequestBody TrainerUpdateRequestDTO trainerUpdateRequestDTO) {
+    public TrainerUpdateResponseDTO updateTrainer(@RequestBody @Valid TrainerUpdateRequestDTO trainerUpdateRequestDTO) {
         return trainerMapper.trainerToUpdateResponseDTO(trainerService.updateTrainer(trainerMapper.updateDTOtoTrainer(trainerUpdateRequestDTO)));
     }
 
@@ -52,17 +52,17 @@ public class TrainerController {
     }
 
     @GetMapping("/trainers/trainings")
-    public List<TrainerTrainingResponseDTO> getTrainersTrainingList(@RequestBody TrainerTrainingCriteriaDTO dto) {
+    public List<TrainerTrainingResponseDTO> getTrainersTrainingList(@RequestBody @Valid TrainerTrainingCriteriaDTO dto) {
         return trainingListMapper.trainingListToTrainerDto(trainerService.findTrainingByUsernameAndCriteria(dto));
     }
 
     @PatchMapping("/trainers/activate")
-    public void activateTrainer(@RequestBody ActivationDTO activationDTO) {
+    public void activateTrainer(@RequestBody @Valid ActivationDTO activationDTO) {
         trainerService.activateTrainer(trainerService.findTrainerByUsername(activationDTO.getUsername()).getId());
     }
 
     @PatchMapping("/trainers/deactivate")
-    public void deactivateTrainer(@RequestBody ActivationDTO activationDTO) {
+    public void deactivateTrainer(@RequestBody @Valid ActivationDTO activationDTO) {
         trainerService.deactivateTrainer(trainerService.findTrainerByUsername(activationDTO.getUsername()).getId());
     }
 }

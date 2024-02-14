@@ -15,9 +15,9 @@ public class TrainingType {
     private Long id;
     @Column(name = "training_type_name", nullable = false)
     private String name;
-    @OneToMany(mappedBy = "specialization", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "specialization", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.DETACH})
     private List<Trainer> trainers;
-    @OneToMany(mappedBy = "trainingType", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "trainingType", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,CascadeType.DETACH})
     private List<Training> trainings;
 
     public TrainingType() {
