@@ -1,7 +1,6 @@
 package com.epam.springcore.repository;
 
 import com.epam.springcore.entity.Trainee;
-import com.epam.springcore.entity.Trainer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,6 +19,12 @@ public interface TraineeRepository extends JpaRepository<Trainee, Long> {
      * @return An {@code Optional} containing the trainee if found, or an empty {@code Optional} otherwise.
      * */
     Optional<Trainee> findByUserId(Long id);
+
+    /**
+     * Retrieves a List of Trainers based on their trainee id
+     * @param id id of a trainee
+     * @return A {@code List} of Long containing Trainer id
+     */
 
     @Query(value = "select trainer_id from trainee_trainer where trainee_id = ?", nativeQuery = true)
     List<Long> findTrainersByTrainerId(@Param("id") Long id);

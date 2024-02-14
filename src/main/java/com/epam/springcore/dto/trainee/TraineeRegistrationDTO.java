@@ -1,7 +1,6 @@
 package com.epam.springcore.dto.trainee;
 
 import jakarta.validation.constraints.NotBlank;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
 

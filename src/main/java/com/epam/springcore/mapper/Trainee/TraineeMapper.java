@@ -3,17 +3,13 @@ package com.epam.springcore.mapper.Trainee;
 import com.epam.springcore.dto.trainee.*;
 import com.epam.springcore.dto.user.UsernameAndPasswordDTO;
 import com.epam.springcore.entity.Trainee;
-import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.mapper.Trainer.TrainerMapper;
 import com.epam.springcore.service.TrainerService;
 import com.epam.springcore.service.UserService;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,

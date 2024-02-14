@@ -1,6 +1,5 @@
 package com.epam.springcore.service.Impl;
 
-import com.epam.springcore.dto.training.TraineeTrainingCriteriaDTO;
 import com.epam.springcore.dto.training.TrainerTrainingCriteriaDTO;
 import com.epam.springcore.entity.Trainee;
 import com.epam.springcore.entity.Trainer;
@@ -10,7 +9,6 @@ import com.epam.springcore.exception.TrainerNotFoundException;
 import com.epam.springcore.repository.TraineeRepository;
 import com.epam.springcore.repository.TrainerRepository;
 import com.epam.springcore.repository.TrainingRepository;
-import com.epam.springcore.service.TraineeService;
 import com.epam.springcore.service.TrainerService;
 import com.epam.springcore.service.UserService;
 import jakarta.transaction.Transactional;
@@ -19,12 +17,12 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+
 import java.util.List;
-import java.util.Optional;
+
 
 import static com.epam.springcore.repository.specifications.TrainingSpecifications.*;
-import static com.epam.springcore.repository.specifications.TrainingSpecifications.hasTrainingDate;
+
 
 @Service
 public class TrainerServiceImpl implements TrainerService {

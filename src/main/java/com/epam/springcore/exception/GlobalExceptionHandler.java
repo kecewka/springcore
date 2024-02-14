@@ -1,6 +1,5 @@
 package com.epam.springcore.exception;
 
-import com.epam.springcore.entity.Trainee;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
