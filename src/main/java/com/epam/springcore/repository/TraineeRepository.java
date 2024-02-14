@@ -27,6 +27,6 @@ public interface TraineeRepository extends JpaRepository<Trainee, Long> {
      */
 
     @Query(value = "select trainer_id from trainee_trainer where trainee_id = ?", nativeQuery = true)
-    List<Long> findTrainersByTrainerId(@Param("id") Long id);
+    List<Long> findTrainersByTraineeId(@Param("id") Long id);
 
 }

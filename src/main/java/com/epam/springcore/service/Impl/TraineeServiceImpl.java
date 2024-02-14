@@ -156,7 +156,7 @@ public class TraineeServiceImpl implements TraineeService {
         updateTrainee(existingTrainee);
 
         List<Trainer> responseTrainers = new ArrayList<>();
-        List<Long> trainerIds = traineeRepository.findTrainersByTrainerId(existingTrainee.getId());
+        List<Long> trainerIds = traineeRepository.findTrainersByTraineeId(existingTrainee.getId());
         for (Long l : trainerIds) {
             responseTrainers.add(trainerService.findTrainerById(l));
         }

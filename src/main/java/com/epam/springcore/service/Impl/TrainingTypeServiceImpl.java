@@ -1,6 +1,7 @@
 package com.epam.springcore.service.Impl;
 
 import com.epam.springcore.entity.TrainingType;
+import com.epam.springcore.exception.TrainingTypeNotFoundException;
 import com.epam.springcore.repository.TrainingTypeRepository;
 import com.epam.springcore.service.TrainingTypeService;
 import jakarta.transaction.Transactional;
@@ -32,12 +33,13 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
     @Override
     @Transactional
     public TrainingType findByName(String name) {
-        LOGGER.info("Finding training with name: {}", name);
-        return trainingTypeRepository.findByName(name).orElseThrow();
+        LOGGER.info("Finding training type with name: {}", name);
+        return trainingTypeRepository.findByName(name).orElseThrow(() -> new TrainingTypeNotFoundException("Trainee with name: " + name + " not found"));
     }
 
     @Override
     public TrainingType findById(Long id) {
-        return trainingTypeRepository.findById(id).orElseThrow();
+        LOGGER.info("Finding training type with id: {}", id);
+        return trainingTypeRepository.findById(id).orElseThrow(() -> new TrainingTypeNotFoundException("Trainee with id: " + id + " not found"));
     }
 }
