@@ -34,15 +34,15 @@ public class TraineeRepositoryTest {
                 new Trainee(1L, LocalDate.of(1999, 12, 31), "asd", new User(1L, "a", "b", "c", "d", true), null, null),
                 new Trainee(2L, LocalDate.of(1999, 11, 29), "ddd", null, null, null),
                 new Trainee(3L, LocalDate.of(1999, 10, 31), "aqqq", null, null, null),
-                new Trainee(4L, LocalDate.of(1999, 9, 15), "address", new User(1L, "a", "b", "qqq", "d", true), null, trainers)
+                new Trainee(4L, LocalDate.of(1999, 9, 15), "address", new User(3L, "a", "b", "qqq", "d", true), null, trainers)
         ));
     }
 
     @Test
     public void findByUserIdTest() {
         Optional<Trainee> optional = traineeRepository.findByUserId(1L);
-        Trainee trainee = new Trainee(1L, LocalDate.of(1999, 12, 31), "asd", new User(1L, "a", "b", "c", "d", true), null, null);
-        User user = new User(1L, "a", "b", "c", "d", true);
+        Trainee trainee = new Trainee(1L, LocalDate.of(1999, 12, 31), "asd", new User(3L, "a", "b", "c", "d", true), null, null);
+        User user = new User(3L, "a", "b", "c", "d", true);
         assertThat(optional.get().getUser().equals(user));
         assertThat(optional.get().equals(trainee));
     }
