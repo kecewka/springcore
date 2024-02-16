@@ -27,6 +27,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TraineeResponseDTO'
+        '404':
+          description: Trainee not found
     delete:
       tags:
         - trainees
@@ -41,6 +43,8 @@ paths:
       responses:
         '200':
           description: Trainee deleted successfully
+        '404':
+          description: Trainee not found
   /trainees:
     post:
       tags:
@@ -59,6 +63,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UsernameAndPasswordDTO'
+        '400':
+          description: Bad request - Invalid data provided
     put:
       tags:
         - trainees
@@ -76,6 +82,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TraineeUpdateResponseDTO'
+        '400':
+          description: Bad request - Invalid data provided
+        '404':
+          description: Trainee not found
   /trainees/activate:
     patch:
       tags:
@@ -86,10 +96,14 @@ paths:
         content:
           application/json:
             schema:
-                $ref: '#/components/schemas/ActivationDTO'
+              $ref: '#/components/schemas/ActivationDTO'
       responses:
         '200':
           description: Trainee activated successfully
+        '400':
+          description: Bad request - Invalid data provided
+        '404':
+          description: Trainee not found
   /trainees/deactivate:
     patch:
       tags:
@@ -100,10 +114,14 @@ paths:
         content:
           application/json:
             schema:
-                $ref: '#/components/schemas/ActivationDTO'
+              $ref: '#/components/schemas/ActivationDTO'
       responses:
         '200':
           description: Trainee deactivated successfully
+        '400':
+          description: Bad request - Invalid data provided
+        '404':
+          description: Trainee not found
   /trainees/trainers:
     put:
       tags:
@@ -124,6 +142,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TraineesTrainerResponseDTO'
+        '400':
+          description: Bad request - Invalid data provided
+        '404':
+          description: Trainee not found
   /trainees/trainings:
     get:
       tags:
@@ -144,6 +166,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TraineeTrainingResponseDTO'
+        '400':
+          description: Bad request - Invalid data provided
+        '404':
+          description: Trainee not found
   /trainers/{username}:
     get:
       tags:
@@ -163,6 +189,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TrainerResponseDTO'
+        '404':
+          description: Trainer not found
   /trainers:
     post:
       tags:
@@ -181,6 +209,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UsernameAndPasswordDTO'
+        '400':
+          description: Bad request - Invalid data provided
     put:
       tags:
         - trainers
@@ -197,7 +227,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TrainerUpdateResponseDTO'  
+                $ref: '#/components/schemas/TrainerUpdateResponseDTO'
+        '400':
+          description: Bad request - Invalid data provided
+        '404':
+          description: Trainer not found
     get:
       tags:
         - trainers
@@ -231,6 +265,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TrainerTrainingResponseDTO'
+        '400':
+          description: Bad request - Invalid data provided
+        '404':
+          description: Trainer not found
   /trainers/activate:
     patch:
       tags:
@@ -241,10 +279,14 @@ paths:
         content:
           application/json:
             schema:
-                $ref: '#/components/schemas/ActivationDTO'
+              $ref: '#/components/schemas/ActivationDTO'
       responses:
         '200':
           description: Trainer activated successfully
+        '400':
+          description: Bad request - Invalid data provided
+        '404':
+          description: Trainer not found
   /trainers/deactivate:
     patch:
       tags:
@@ -255,10 +297,14 @@ paths:
         content:
           application/json:
             schema:
-                $ref: '#/components/schemas/ActivationDTO'
+              $ref: '#/components/schemas/ActivationDTO'
       responses:
         '200':
           description: Trainer activated successfully
+        '400':
+          description: Bad request - Invalid data provided
+        '404':
+          description: Trainer not found
   /trainings:
     post:
       tags:
@@ -273,6 +319,8 @@ paths:
       responses:
         '200':
           description: Training created successfully
+        '400':
+          description: Bad request - Invalid data provided
   /training-types:
     get:
       tags:
@@ -474,7 +522,7 @@ components:
     TrainersTraineeDTO:
       type: object
       properties:
-        username: 
+        username:
           type: string
         firstName:
           type: string
