@@ -1,9 +1,6 @@
 package com.epam.springcore.controller;
 
-import com.epam.springcore.exception.ReturnMessage;
-import com.epam.springcore.exception.ReturnMessageList;
-import com.epam.springcore.exception.TraineeNotFoundException;
-import com.epam.springcore.exception.UserNotFoundException;
+import com.epam.springcore.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -27,6 +24,30 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ReturnMessage> handleException(TraineeNotFoundException exception) {
+        ReturnMessage data = new ReturnMessage();
+        data.setInfo(exception.getMessage());
+
+        return new ResponseEntity<>(data, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ReturnMessage> handleException(TrainerNotFoundException exception) {
+        ReturnMessage data = new ReturnMessage();
+        data.setInfo(exception.getMessage());
+
+        return new ResponseEntity<>(data, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ReturnMessage> handleException(TrainingNotFoundException exception) {
+        ReturnMessage data = new ReturnMessage();
+        data.setInfo(exception.getMessage());
+
+        return new ResponseEntity<>(data, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ReturnMessage> handleException(TrainingTypeNotFoundException exception) {
         ReturnMessage data = new ReturnMessage();
         data.setInfo(exception.getMessage());
 
