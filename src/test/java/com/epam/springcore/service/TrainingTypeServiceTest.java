@@ -2,7 +2,7 @@ package com.epam.springcore.service;
 
 import com.epam.springcore.entity.TrainingType;
 import com.epam.springcore.repository.TrainingTypeRepository;
-import com.epam.springcore.service.Impl.TrainingTypeServiceImpl;
+import com.epam.springcore.service.impl.TrainingTypeServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

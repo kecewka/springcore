@@ -1,4 +1,4 @@
-package com.epam.springcore.service.Impl;
+package com.epam.springcore.service.impl;
 
 import com.epam.springcore.dto.training.TraineeTrainingCriteriaDTO;
 import com.epam.springcore.entity.Trainee;
@@ -14,6 +14,7 @@ import com.epam.springcore.service.UserService;
 import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +44,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     @Transactional
     public List<Trainee> getAllTrainees() {
-        LOGGER.info("Getting all trainees");
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Getting all trainees", transactionId);
         return traineeRepository.findAll();
     }
 
@@ -51,7 +53,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     @Transactional
     public Trainee findTraineeById(Long id) {
-        LOGGER.info("Finding trainee with ID: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Finding trainee with ID: {}", transactionId, id);
 
         return traineeRepository.findById(id).orElseThrow(() -> new TraineeNotFoundException("Trainee with id: " + id + " not found"));
 
@@ -60,7 +63,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     @Transactional
     public Trainee findTraineeByUsername(String username) {
-        LOGGER.info("Finding trainee with Username: {}", username);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Finding trainee with Username: {}", transactionId, username);
         User user = userService.findUserByUsername(username);
 
         return traineeRepository.findByUserId(user.getId()).orElseThrow(() -> new TraineeNotFoundException("Trainee with username: " + username + " not found"));
@@ -70,7 +74,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     @Transactional
     public Trainee createTrainee(Trainee trainee) {
-        LOGGER.info("Creating trainee: {}", trainee);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Creating trainee: {}", transactionId, trainee);
         userService.createUser(trainee.getUser());
         return traineeRepository.save(trainee);
     }
@@ -78,7 +83,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     @Transactional
     public Trainee updateTrainee(Trainee trainee) {
-        LOGGER.info("Updating trainee: {}", trainee);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Updating trainee: {}", transactionId, trainee);
         Trainee existingTrainee = findTraineeByUsername(trainee.getUser().getUsername());
         existingTrainee.setAddress(trainee.getAddress());
         existingTrainee.setDateOfBirth(trainee.getDateOfBirth());
@@ -95,7 +101,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     @Transactional
     public void deleteTrainee(Long id) {
-        LOGGER.info("Deleting trainee with ID: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Deleting trainee with ID: {}", transactionId, id);
         traineeRepository.deleteById(id);
     }
 
@@ -103,7 +110,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     @Transactional
     public void deleteTraineeByUsername(String username) {
-        LOGGER.info("Deleting trainee with username: {}", username);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Deleting trainee with username: {}", transactionId, username);
         Trainee trainee = findTraineeByUsername(username);
         traineeRepository.deleteById(trainee.getId());
     }
@@ -112,7 +120,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     @Transactional
     public List<Training> findTrainingByUsernameAndCriteria(TraineeTrainingCriteriaDTO dto) {
-        LOGGER.info("finding training by username and criteria");
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] finding training by username and criteria", transactionId);
         Trainee trainee = findTraineeByUsername(dto.getUsername());
 
         if (dto.getTrainingType() == null && dto.getFrom() == null && dto.getTo() == null && dto.getTrainerName() == null) {
@@ -146,7 +155,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     @Transactional
     public List<Trainer> updateTraineesTrainerList(String username, List<String> trainers) {
-        LOGGER.info("updating trainer list of trainee with username: {}", username);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] updating trainer list of trainee with username: {}", transactionId, username);
         List<Trainer> convertedTrainers = new ArrayList<>();
         for (String s : trainers) {
             convertedTrainers.add(trainerService.findTrainerByUsername(s));
@@ -167,7 +177,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     @Transactional
     public void changeTraineePassword(Long id, String password) {
-        LOGGER.info("updating password of trainee with id: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] updating password of trainee with id: {}", transactionId, id);
         Trainee trainee = findTraineeById(id);
         trainee.getUser().setPassword(password);
         updateTrainee(trainee);
@@ -176,7 +187,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     @Transactional
     public void activateTrainee(Long id) {
-        LOGGER.info("activating trainee with id: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] activating trainee with id: {}", transactionId, id);
         Trainee trainee = findTraineeById(id);
         trainee.getUser().setActive(true);
         updateTrainee(trainee);
@@ -185,7 +197,8 @@ public class TraineeServiceImpl implements TraineeService {
     @Override
     @Transactional
     public void deactivateTrainee(Long id) {
-        LOGGER.info("deactivating trainee with id: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] deactivating trainee with id: {}", transactionId, id);
         Trainee trainee = findTraineeById(id);
         trainee.getUser().setActive(false);
         updateTrainee(trainee);

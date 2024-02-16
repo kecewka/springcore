@@ -1,6 +1,6 @@
 package com.epam.springcore.dto.training;
 
-import com.epam.springcore.dto.TrainingType.TrainingTypeDTO;
+import com.epam.springcore.dto.trainingtype.TrainingTypeDTO;
 
 import java.time.LocalDate;
 

@@ -1,9 +1,9 @@
 package com.epam.springcore.controller;
 
-import com.epam.springcore.dto.TrainingType.TrainingTypeDTO;
+import com.epam.springcore.dto.trainingtype.TrainingTypeDTO;
 import com.epam.springcore.entity.TrainingType;
-import com.epam.springcore.mapper.TrainingType.TrainingTypeListMapper;
-import com.epam.springcore.mapper.TrainingType.TrainingTypeMapper;
+import com.epam.springcore.mapper.trainingtype.TrainingTypeListMapper;
+import com.epam.springcore.mapper.trainingtype.TrainingTypeMapper;
 import com.epam.springcore.service.TrainingTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

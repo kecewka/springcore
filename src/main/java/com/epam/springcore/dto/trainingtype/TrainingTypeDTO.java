@@ -1,4 +1,4 @@
-package com.epam.springcore.dto.TrainingType;
+package com.epam.springcore.dto.trainingtype;
 
 
 public class TrainingTypeDTO {

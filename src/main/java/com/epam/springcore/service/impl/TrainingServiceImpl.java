@@ -1,4 +1,4 @@
-package com.epam.springcore.service.Impl;
+package com.epam.springcore.service.impl;
 
 import com.epam.springcore.entity.Training;
 import com.epam.springcore.exception.TrainingNotFoundException;
@@ -7,6 +7,7 @@ import com.epam.springcore.service.TrainingService;
 import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +26,15 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public List<Training> getAllTrainings() {
-        LOGGER.info("Getting all trainings");
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Getting all trainings", transactionId);
         return trainingRepository.findAll();
     }
 
     @Override
     public Training findTrainingById(Long id) {
-        LOGGER.info("Finding training with ID: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Finding training with ID: {}", transactionId, id);
 
         return trainingRepository.findById(id).orElseThrow(() -> new TrainingNotFoundException("Training with id: " + id + " not found"));
     }
@@ -39,19 +42,22 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     @Transactional
     public void createTraining(Training training) {
-        LOGGER.info("Creating training: {}", training);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Creating training: {}", transactionId, training);
         trainingRepository.save(training);
     }
 
     @Override
     public void updateTraining(Training training) {
-        LOGGER.info("Updating training: {}", training);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Updating training: {}", transactionId, training);
         trainingRepository.save(training);
     }
 
     @Override
     public void deleteTraining(Long id) {
-        LOGGER.info("Deleting training with ID: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Deleting training with ID: {}", transactionId, id);
         trainingRepository.deleteById(id);
     }
 }

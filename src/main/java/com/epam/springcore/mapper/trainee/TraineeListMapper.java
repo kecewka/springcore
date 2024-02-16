@@ -1,4 +1,4 @@
-package com.epam.springcore.mapper.Trainee;
+package com.epam.springcore.mapper.trainee;
 
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;

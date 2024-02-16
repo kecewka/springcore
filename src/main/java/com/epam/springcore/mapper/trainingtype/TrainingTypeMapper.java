@@ -1,6 +1,6 @@
-package com.epam.springcore.mapper.TrainingType;
+package com.epam.springcore.mapper.trainingtype;
 
-import com.epam.springcore.dto.TrainingType.TrainingTypeDTO;
+import com.epam.springcore.dto.trainingtype.TrainingTypeDTO;
 import com.epam.springcore.entity.TrainingType;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;

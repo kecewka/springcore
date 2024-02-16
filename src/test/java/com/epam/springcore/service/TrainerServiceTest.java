@@ -4,7 +4,7 @@ import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.TrainingType;
 import com.epam.springcore.entity.User;
 import com.epam.springcore.repository.TrainerRepository;
-import com.epam.springcore.service.Impl.TrainerServiceImpl;
+import com.epam.springcore.service.impl.TrainerServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

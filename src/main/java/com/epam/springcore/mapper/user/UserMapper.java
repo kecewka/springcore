@@ -1,4 +1,4 @@
-package com.epam.springcore.mapper.User;
+package com.epam.springcore.mapper.user;
 
 import com.epam.springcore.dto.user.UsernameAndPasswordDTO;
 import com.epam.springcore.entity.User;

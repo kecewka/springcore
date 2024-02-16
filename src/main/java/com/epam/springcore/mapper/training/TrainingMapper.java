@@ -1,4 +1,4 @@
-package com.epam.springcore.mapper.Training;
+package com.epam.springcore.mapper.training;
 
 import com.epam.springcore.dto.training.TrainerTrainingResponseDTO;
 import com.epam.springcore.dto.training.TrainingPostDTO;

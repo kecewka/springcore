@@ -1,5 +1,9 @@
-package com.epam.springcore.exception;
+package com.epam.springcore.controller;
 
+import com.epam.springcore.exception.ReturnMessage;
+import com.epam.springcore.exception.ReturnMessageList;
+import com.epam.springcore.exception.TraineeNotFoundException;
+import com.epam.springcore.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

@@ -1,4 +1,4 @@
-package com.epam.springcore.service.Impl;
+package com.epam.springcore.service.impl;
 
 import com.epam.springcore.entity.User;
 import com.epam.springcore.exception.UserNotFoundException;
@@ -7,6 +7,7 @@ import com.epam.springcore.service.UserService;
 import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +27,16 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public List<User> getAllUsers() {
-        LOGGER.info("Getting all users");
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Getting all users", transactionId);
         return userRepository.findAll();
     }
 
     @Transactional
     @Override
     public User getUserById(Long id) {
-        LOGGER.info("Finding user with ID: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Finding user with ID: {}", transactionId, id);
 
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id: " + id + " not found"));
     }
@@ -41,14 +44,16 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User findUserByUsername(String username) {
-        LOGGER.info("Finding user with username: {}", username);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Finding user with username: {}", transactionId, username);
 
         return userRepository.findUserByUsername(username).orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
     }
 
     @Override
     public void createUser(User user) {
-        LOGGER.info("Creating user: {}", user);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Creating user: {}", transactionId, user);
         String username = generateUsername(user.getFirstName(), user.getLastName());
         String password = generatePassword();
         user.setUsername(username);
@@ -58,24 +63,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        LOGGER.info("Updating user: {}", user);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Updating user: {}", transactionId, user);
         userRepository.save(user);
     }
 
     @Override
     public void deleteUser(Long id) {
-        LOGGER.info("Deleting user with ID: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Deleting user with ID: {}", transactionId, id);
         userRepository.deleteById(id);
     }
 
     @Override
     public boolean usernameExists(String username) {
-        LOGGER.info("Checking the existence of username: {}", username);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Checking the existence of username: {}", transactionId, username);
         return userRepository.existsByUsername(username);
     }
 
     public String generateUsername(String firstName, String lastName) {
-        LOGGER.info("Generating username");
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Generating username", transactionId);
         String baseUsername = firstName.toLowerCase() + "." + lastName.toLowerCase();
         String generatedUsername = baseUsername;
 
@@ -89,12 +98,13 @@ public class UserServiceImpl implements UserService {
                 index++;
             }
         }
-        LOGGER.info("Username has been generated");
+        LOGGER.info("[Transaction ID: {}] Username has been generated", transactionId);
         return generatedUsername;
     }
 
     public String generatePassword() {
-        LOGGER.info("Generating password");
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Generating password", transactionId);
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567980";
         StringBuilder builder = new StringBuilder(10);
         Random random = new Random();
@@ -103,7 +113,7 @@ public class UserServiceImpl implements UserService {
             char randomChar = chars.charAt(randomIndex);
             builder.append(randomChar);
         }
-        LOGGER.info("Password has been generated");
+        LOGGER.info("[Transaction ID: {}] Password has been generated", transactionId);
         return builder.toString();
     }
 }

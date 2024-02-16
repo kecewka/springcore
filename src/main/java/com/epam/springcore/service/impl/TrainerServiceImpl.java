@@ -1,4 +1,4 @@
-package com.epam.springcore.service.Impl;
+package com.epam.springcore.service.impl;
 
 import com.epam.springcore.dto.training.TrainerTrainingCriteriaDTO;
 import com.epam.springcore.entity.Trainee;
@@ -14,6 +14,7 @@ import com.epam.springcore.service.UserService;
 import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,14 +44,16 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     @Transactional
     public List<Trainer> getAllTrainers() {
-        LOGGER.info("Getting all trainers");
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Getting all trainers", transactionId);
         return trainerRepository.findAll();
     }
 
     @Override
     @Transactional
     public Trainer findTrainerById(Long id) {
-        LOGGER.info("Finding trainer with ID: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Finding trainer with ID: {}", transactionId, id);
 
         return trainerRepository.findById(id).orElseThrow(() -> new TrainerNotFoundException("Trainer with id: " + id + " not found"));
     }
@@ -58,7 +61,8 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     @Transactional
     public Trainer createTrainer(Trainer trainer) {
-        LOGGER.info("Creating trainer: {}", trainer);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Creating trainer: {}", transactionId, trainer);
         userService.createUser(trainer.getUser());
         return trainerRepository.save(trainer);
     }
@@ -66,7 +70,8 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     @Transactional
     public Trainer updateTrainer(Trainer trainer) {
-        LOGGER.info("Updating trainer: {}", trainer);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Updating trainer: {}", transactionId, trainer);
         Trainer existingTrainer = findTrainerByUsername(trainer.getUser().getUsername());
         existingTrainer.setSpecialization(trainer.getSpecialization());
 
@@ -82,14 +87,16 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     @Transactional
     public void deleteTrainer(Long id) {
-        LOGGER.info("Deleting trainer with ID: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Deleting trainer with ID: {}", transactionId, id);
         trainerRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public Trainer findTrainerByUsername(String username) {
-        LOGGER.info("Finding trainer with Username: {}", username);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Finding trainer with Username: {}", transactionId, username);
         User user = userService.findUserByUsername(username);
 
         return trainerRepository.findByUserId(user.getId()).orElseThrow(() -> new TrainerNotFoundException("Trainer with username: " + username + " not found"));
@@ -99,7 +106,8 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     @Transactional
     public void deleteTrainerByUsername(String username) {
-        LOGGER.info("Deleting trainer with username: {}", username);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] Deleting trainer with username: {}", transactionId, username);
         Trainer trainer = findTrainerByUsername(username);
         trainerRepository.deleteById(trainer.getId());
     }
@@ -107,7 +115,8 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     @Transactional
     public List<Training> findTrainingByUsernameAndCriteria(TrainerTrainingCriteriaDTO dto) {
-        LOGGER.info("finding training by username and criteria");
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] finding training by username and criteria", transactionId);
         Trainer trainer = findTrainerByUsername(dto.getUsername());
 
         if (dto.getFrom() == null && dto.getTo() == null && dto.getTraineeName() == null) {
@@ -139,7 +148,8 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     @Transactional
     public void changeTrainerPassword(Long id, String password) {
-        LOGGER.info("updating password of trainer with id: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] updating password of trainer with id: {}", transactionId, id);
         Trainer trainer = findTrainerById(id);
         trainer.getUser().setPassword(password);
         updateTrainer(trainer);
@@ -148,7 +158,8 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     @Transactional
     public void activateTrainer(Long id) {
-        LOGGER.info("activating trainer with id: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] activating trainer with id: {}", transactionId, id);
         Trainer trainer = findTrainerById(id);
         trainer.getUser().setActive(true);
         updateTrainer(trainer);
@@ -157,7 +168,8 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     @Transactional
     public void deactivateTrainer(Long id) {
-        LOGGER.info("deactivating trainer with id: {}", id);
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] deactivating trainer with id: {}", transactionId, id);
         Trainer trainer = findTrainerById(id);
         trainer.getUser().setActive(false);
         updateTrainer(trainer);
@@ -166,7 +178,8 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     @Transactional
     public List<Trainer> getNotAssignedAndActiveTrainers() {
-        LOGGER.info("finding all active trainers without trainees");
+        String transactionId = MDC.get("transactionId");
+        LOGGER.info("[Transaction ID: {}] finding all active trainers without trainees", transactionId);
         List<Trainer> list = trainerRepository.findAllActiveTrainersWithoutTrainees();
         System.out.println(list);
         return list;
