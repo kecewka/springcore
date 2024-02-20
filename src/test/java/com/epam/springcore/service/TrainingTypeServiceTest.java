@@ -3,19 +3,21 @@ package com.epam.springcore.service;
 import com.epam.springcore.entity.TrainingType;
 import com.epam.springcore.repository.TrainingTypeRepository;
 import com.epam.springcore.service.impl.TrainingTypeServiceImpl;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 public class TrainingTypeServiceTest {
 
     @InjectMocks
@@ -24,7 +26,7 @@ public class TrainingTypeServiceTest {
     @Mock
     private TrainingTypeRepository trainingTypeRepository;
 
-    @Before
+    @BeforeEach
     public void inint() {
         MockitoAnnotations.openMocks(this);
     }

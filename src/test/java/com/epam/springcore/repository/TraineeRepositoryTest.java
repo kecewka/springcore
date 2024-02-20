@@ -1,16 +1,14 @@
 package com.epam.springcore.repository;
 
-import com.epam.springcore.config.TestConfig;
 import com.epam.springcore.entity.Trainee;
 import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.User;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,13 +18,15 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@DataJpaTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TraineeRepositoryTest {
     @Autowired
     private TraineeRepository traineeRepository;
+    @Autowired
+    TestEntityManager entityManager;
 
-    @Before
+    @BeforeAll
     public void setUp() {
         List<Trainer> trainers = new ArrayList<>();
         trainers.add(new Trainer(1L, null, new User(5L, "tr", "tr", "tr.tr", "tr", true), new ArrayList<>(), new ArrayList<>()));
@@ -52,6 +52,6 @@ public class TraineeRepositoryTest {
         List<Long> list = traineeRepository.findTrainersByTraineeId(4L);
         List<Long> newList = new ArrayList<>();
         newList.add(1L);
-        assertThat(list.equals(newList));
+        assertThat(list).isEqualTo(newList);
     }
 }

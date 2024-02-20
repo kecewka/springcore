@@ -5,21 +5,23 @@ import com.epam.springcore.entity.User;
 import com.epam.springcore.repository.TraineeRepository;
 import com.epam.springcore.repository.UserRepository;
 import com.epam.springcore.service.impl.TraineeServiceImpl;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 
+@SpringBootTest
 public class TraineeServiceTest {
 
     @InjectMocks
@@ -31,7 +33,7 @@ public class TraineeServiceTest {
     @Mock
     private UserRepository userRepository;
 
-    @Before
+    @BeforeEach
     public void init() {
         MockitoAnnotations.openMocks(this);
     }

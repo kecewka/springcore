@@ -1,32 +1,29 @@
 package com.epam.springcore.repository;
 
-import com.epam.springcore.config.TestConfig;
 import com.epam.springcore.entity.*;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@DataJpaTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TrainingRepositoryTest {
     @Autowired
     private TrainingRepository trainingRepository;
     @Autowired
     private TraineeRepository traineeRepository;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         traineeRepository.saveAllAndFlush(List.of(
-                new Trainee(1L, LocalDate.of(1999, 12, 31), "asd",new User(1L, "a", "b", "c", "d", true), null, null)
+                new Trainee(1L, LocalDate.of(1999, 12, 31), "asd", new User(1L, "a", "b", "c", "d", true), null, null)
         ));
 
         trainingRepository.saveAllAndFlush(List.of(

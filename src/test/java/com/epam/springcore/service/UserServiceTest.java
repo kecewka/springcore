@@ -3,22 +3,23 @@ package com.epam.springcore.service;
 import com.epam.springcore.entity.User;
 import com.epam.springcore.repository.UserRepository;
 import com.epam.springcore.service.impl.UserServiceImpl;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
-
+@SpringBootTest
 public class UserServiceTest {
 
     @InjectMocks
@@ -27,7 +28,7 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
-    @Before
+    @BeforeEach
     public void init() {
         MockitoAnnotations.openMocks(this);
     }
@@ -102,7 +103,8 @@ public class UserServiceTest {
     public void generatePasswordTest() {
         String generated = userService.generatePassword();
         assertNotNull("Generated password should not be null", generated);
-        assertEquals("Generated password should have a length of 10", 10, generated.length());
+        System.out.println("Generated password should have a length of 10: ");
+        assertEquals(10, generated.length());
         assertTrue("Generated password should only contain alphanumeric characters", generated.matches("[a-zA-Z0-9]+"));
     }
 

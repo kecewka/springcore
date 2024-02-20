@@ -1,25 +1,15 @@
 package com.epam.springcore;
 
-import com.epam.springcore.config.ApplicationConfig;
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRegistration;
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
 
-public class SpringCoreApplication implements WebApplicationInitializer {
-    @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        AnnotationConfigWebApplicationContext annotationContext = new AnnotationConfigWebApplicationContext();
-        annotationContext.register(ApplicationConfig.class);
-        servletContext.addListener(new ContextLoaderListener(annotationContext));
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-        ServletRegistration.Dynamic servletRegistration = servletContext.addServlet("dispatcher", new DispatcherServlet(annotationContext));
 
-        servletRegistration.addMapping("/");
-        servletRegistration.setLoadOnStartup(1);
+@SpringBootApplication
+public class SpringCoreApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SpringCoreApplication.class, args);
     }
+
 
 }

@@ -1,26 +1,24 @@
 package com.epam.springcore.repository;
 
-import com.epam.springcore.config.TestConfig;
 import com.epam.springcore.entity.TrainingType;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfig.class)
+@DataJpaTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TrainingTypeRepositoryTest {
     @Autowired
     TrainingTypeRepository trainingTypeRepository;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         trainingTypeRepository.saveAllAndFlush(List.of(
                 new TrainingType(1L, "name", null, null)
