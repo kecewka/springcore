@@ -1,7 +1,7 @@
 package com.epam.springcore.repository;
 
 import com.epam.springcore.entity.*;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class TrainingRepositoryTest {
     @Autowired
     private TraineeRepository traineeRepository;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
         traineeRepository.saveAllAndFlush(List.of(
                 new Trainee(1L, LocalDate.of(1999, 12, 31), "asd", new User(1L, "a", "b", "c", "d", true), null, null)

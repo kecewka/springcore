@@ -1,7 +1,7 @@
 package com.epam.springcore.repository;
 
 import com.epam.springcore.entity.TrainingType;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class TrainingTypeRepositoryTest {
     @Autowired
     TrainingTypeRepository trainingTypeRepository;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
         trainingTypeRepository.saveAllAndFlush(List.of(
                 new TrainingType(1L, "name", null, null)

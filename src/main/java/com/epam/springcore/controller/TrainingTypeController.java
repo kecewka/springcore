@@ -1,10 +1,12 @@
 package com.epam.springcore.controller;
 
+import com.epam.springcore.actuator.RequestTimer;
 import com.epam.springcore.dto.trainingtype.TrainingTypeDTO;
 import com.epam.springcore.entity.TrainingType;
 import com.epam.springcore.mapper.trainingtype.TrainingTypeListMapper;
 import com.epam.springcore.mapper.trainingtype.TrainingTypeMapper;
 import com.epam.springcore.service.TrainingTypeService;
+import io.micrometer.core.instrument.Timer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,10 @@ public class TrainingTypeController {
     private final TrainingTypeMapper trainingTypeMapper;
 
     @Autowired
+    private RequestTimer requestTimer;
+
+
+    @Autowired
     public TrainingTypeController(TrainingTypeService trainingTypeService, TrainingTypeListMapper trainingTypeListMapper, TrainingTypeMapper trainingTypeMapper) {
         this.trainingTypeService = trainingTypeService;
         this.trainingTypeListMapper = trainingTypeListMapper;
@@ -31,7 +37,11 @@ public class TrainingTypeController {
 
     @GetMapping("/training-types")
     public List<TrainingTypeDTO> getTrainingTypes(){
-        return trainingTypeListMapper.toDtoList(trainingTypeService.findAllTrainingTypes());
+        Timer.Sample sample = requestTimer.startTimer();
+        List<TrainingTypeDTO> list = trainingTypeListMapper.toDtoList(trainingTypeService.findAllTrainingTypes());
+        requestTimer.stopTimer(sample);
+        return list;
+
     }
 
     @GetMapping("/training-types/{name}")
