@@ -34,8 +34,8 @@ public class TrainerRepositoryTest {
         Optional<Trainer> optional = trainerRepository.findByUserId(1L);
         Trainer trainer = new Trainer(1L, null, new User(1L, "a", "b", "c", "d", true), null, null);
         User user = new User(1L, "a", "b", "c", "d", true);
-        assertThat(optional.get().getUser().equals(user));
-        assertThat(optional.get().equals(trainer));
+        assertThat(optional.get().getUser()).isEqualTo(user);
+        assertThat(optional.get()).isEqualTo(trainer);
     }
 
     @Test

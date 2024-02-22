@@ -37,6 +37,6 @@ public class UserRepositoryTest {
     public void existsByUsernameTest() {
         boolean check = userRepository.existsByUsername("b");
         boolean expected = true;
-        assert check == expected;
+        assert check == expected;;
     }
 }

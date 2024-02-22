@@ -43,8 +43,8 @@ public class TraineeRepositoryTest {
         Optional<Trainee> optional = traineeRepository.findByUserId(1L);
         Trainee trainee = new Trainee(1L, LocalDate.of(1999, 12, 31), "asd", new User(3L, "a", "b", "c", "d", true), null, null);
         User user = new User(3L, "a", "b", "c", "d", true);
-        assertThat(optional.get().getUser().equals(user));
-        assertThat(optional.get().equals(trainee));
+        assertThat(optional.get().getUser()).isEqualTo(user);
+        assertThat(optional.get()).isEqualTo(trainee);
     }
 
     @Test
