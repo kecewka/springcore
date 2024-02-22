@@ -37,13 +37,13 @@ public class TrainingTypeServiceImpl implements TrainingTypeService {
     public TrainingType findByName(String name) {
         String transactionId = MDC.get("transactionId");
         LOGGER.info("[Transaction ID: {}] Finding training type with name: {}", transactionId, name);
-        return trainingTypeRepository.findByName(name).orElseThrow(() -> new TrainingTypeNotFoundException("Trainee with name: " + name + " not found"));
+        return trainingTypeRepository.findByName(name).orElseThrow(() -> new TrainingTypeNotFoundException("Training type with name: " + name + " not found"));
     }
 
     @Override
     public TrainingType findById(Long id) {
         String transactionId = MDC.get("transactionId");
         LOGGER.info("[Transaction ID: {}] Finding training type with id: {}", transactionId, id);
-        return trainingTypeRepository.findById(id).orElseThrow(() -> new TrainingTypeNotFoundException("Trainee with id: " + id + " not found"));
+        return trainingTypeRepository.findById(id).orElseThrow(() -> new TrainingTypeNotFoundException("Training type with id: " + id + " not found"));
     }
 }
