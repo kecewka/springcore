@@ -30,13 +30,13 @@ public class UserRepositoryTest {
     public void findByUsernameTest() {
         User user = userRepository.findUserByUsername("a").get();
         User user1 = new User(1L, "a", "a", "a", "a", true);
-        assertThat(user.equals(user1));
+        assertThat(user).isEqualTo(user1);
     }
 
     @Test
     public void existsByUsernameTest() {
         boolean check = userRepository.existsByUsername("b");
         boolean expected = true;
-        assert check == expected;;
+        assert check == expected;
     }
 }

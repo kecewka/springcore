@@ -29,6 +29,6 @@ public class TrainingTypeRepositoryTest {
     public void findByNameTest() {
         Optional<TrainingType> found = trainingTypeRepository.findByName("name");
         TrainingType trainingType = new TrainingType(1L, "name", null, null);
-        assertThat(found.equals(trainingType));
+        assertThat(found.get()).isEqualTo(trainingType);
     }
 }
