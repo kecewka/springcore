@@ -13,6 +13,8 @@ public class TrainingSpecifications {
     }
 
     public static Specification<Training> hasTrainerId(Long trainerId) {
+//        return trainerId == null ? Specification.where(null) : (root, query, criteriaBuilder) ->
+//                criteriaBuilder.equal(root.get("trainer").get("id"), trainerId);
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("trainer").get("id"), trainerId);
     }
