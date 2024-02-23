@@ -1,7 +1,6 @@
 package com.epam.springcore.service.impl;
 
 import com.epam.springcore.dto.training.TrainerTrainingCriteriaDTO;
-import com.epam.springcore.entity.Trainee;
 import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.Training;
 import com.epam.springcore.entity.User;
@@ -9,6 +8,7 @@ import com.epam.springcore.exception.TrainerNotFoundException;
 import com.epam.springcore.repository.TraineeRepository;
 import com.epam.springcore.repository.TrainerRepository;
 import com.epam.springcore.repository.TrainingRepository;
+import com.epam.springcore.repository.specifications.TrainingSpecifications;
 import com.epam.springcore.service.TrainerService;
 import com.epam.springcore.service.UserService;
 import jakarta.transaction.Transactional;
@@ -16,13 +16,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 
-
-import static com.epam.springcore.repository.specifications.TrainingSpecifications.*;
+import static com.epam.springcore.repository.specifications.SpecificationUtils.byField;
 
 
 @Service
@@ -119,29 +118,12 @@ public class TrainerServiceImpl implements TrainerService {
         LOGGER.info("[Transaction ID: {}] finding training by username and criteria", transactionId);
         Trainer trainer = findTrainerByUsername(dto.getUsername());
 
-        if (dto.getFrom() == null && dto.getTo() == null && dto.getTraineeName() == null) {
-            return trainingRepository.findAll(hasTrainerId(trainer.getId()));
-        }
-        if (dto.getTo() == null && dto.getTraineeName() == null) {
-            return trainingRepository.findAll(hasTrainerId(trainer.getId())
-                    .and(hasTrainingDateAfter(dto.getFrom())));
-        }
-        if (dto.getFrom() == null && dto.getTraineeName() == null) {
-            return trainingRepository.findAll(hasTrainerId(trainer.getId())
-                    .and(hasTrainingDateBefore(dto.getTo())));
-        }
-        if (dto.getTraineeName() == null) {
-            return trainingRepository.findAll(hasTrainerId(trainer.getId())
-                    .and(hasTrainingDateBetween(dto.getFrom(), dto.getTo())));
-        }
-        if (dto.getFrom() == null && dto.getTo() == null) {
-            Trainee trainee = traineeRepository.findByUserId(userService.findUserByUsername(dto.getUsername()).getId()).get();
-            return trainingRepository.findAll(hasTrainerId(trainer.getId())
-                    .and(hasTraineeId(trainee.getId())));
-        }
-        return trainingRepository.findAll(hasTrainerId(trainer.getId())
-                .and(hasTrainingDateBetween(dto.getFrom(), dto.getTo()))
-                .and(hasTraineeId(traineeRepository.findByUserId(userService.findUserByUsername(dto.getUsername()).getId()).get().getId())));
+        Specification<Training> spec = Specification.where(
+                byField(TrainingSpecifications::hasTrainerId, trainer.getId())
+                        .and(byField(TrainingSpecifications::hasTrainingDateAfter, dto.getFrom()))
+                        .and(byField(TrainingSpecifications::hasTrainingDateBefore, dto.getTo()))
+                        .and(byField(TrainingSpecifications::hasTraineeId, traineeRepository.findByUserId(userService.findUserByUsername(dto.getUsername()).getId()).get().getId())));
+        return trainingRepository.findAll(spec);
 
     }
 
