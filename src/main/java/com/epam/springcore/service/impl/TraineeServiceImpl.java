@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,14 +33,16 @@ public class TraineeServiceImpl implements TraineeService {
     private final TrainingRepository trainingRepository;
     private final UserService userService;
     private final TrainerService trainerService;
+    private final PasswordEncoder passwordEncoder;
     private static final Logger LOGGER = LogManager.getLogger(TraineeServiceImpl.class);
 
     @Autowired
-    public TraineeServiceImpl(TraineeRepository traineeRepository, TrainingRepository trainingRepository, UserService userService, TrainerService trainerService) {
+    public TraineeServiceImpl(TraineeRepository traineeRepository, TrainingRepository trainingRepository, UserService userService, TrainerService trainerService, PasswordEncoder passwordEncoder) {
         this.traineeRepository = traineeRepository;
         this.trainingRepository = trainingRepository;
         this.userService = userService;
         this.trainerService = trainerService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -79,7 +82,11 @@ public class TraineeServiceImpl implements TraineeService {
         String transactionId = MDC.get("transactionId");
         LOGGER.info("[Transaction ID: {}] Creating trainee: {}", transactionId, trainee);
         userService.createUser(trainee.getUser());
-        return traineeRepository.save(trainee);
+        Trainee copyTrainee = copyTrainee(trainee);
+        String hashedPassword = passwordEncoder.encode(trainee.getUser().getPassword());
+        trainee.getUser().setPassword(hashedPassword);
+        traineeRepository.save(trainee);
+        return copyTrainee;
     }
 
     @Override
@@ -189,4 +196,13 @@ public class TraineeServiceImpl implements TraineeService {
         updateTrainee(trainee);
     }
 
+    @Override
+    public Trainee copyTrainee(Trainee trainee) {
+        User copyUser = new User();
+        copyUser.setUsername(trainee.getUser().getUsername());
+        copyUser.setPassword(trainee.getUser().getPassword());
+        Trainee copyTrainee = new Trainee();
+        copyTrainee.setUser(copyUser);
+        return copyTrainee;
+    }
 }

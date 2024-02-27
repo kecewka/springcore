@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
         LOGGER.info("[Transaction ID: {}] Creating user: {}", transactionId, user);
         String username = generateUsername(user.getFirstName(), user.getLastName());
         String password = generatePassword();
+
         user.setUsername(username);
         user.setPassword(password);
         userRepository.save(user);

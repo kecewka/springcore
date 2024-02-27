@@ -63,7 +63,7 @@ public interface TraineeService {
     /**
      * Retrieves the training list for a trainee based on username, training name, and date.
      *
-     * @param traineeTrainingCriteriaDTO The DTO containing criterias.
+     * @param traineeTrainingCriteriaDTO The DTO containing criteria.
      * @return A list of trainings that match the criteria.
      */
     List<Training> findTrainingByUsernameAndCriteria(TraineeTrainingCriteriaDTO traineeTrainingCriteriaDTO);
@@ -73,7 +73,7 @@ public interface TraineeService {
      *
      * @param username The username of Trainee.
      * @param trainers The trainers list.
-     * @return List of trianers
+     * @return List of trainers
      */
     List<Trainer> updateTraineesTrainerList(String username, List<String> trainers);
 
@@ -99,4 +99,11 @@ public interface TraineeService {
      */
     void deactivateTrainee(Long id);
 
+    /**
+     * Copies Trainee for create Response.
+     *
+     * @param trainee The Trainee entity to be copied.
+     * @return copied Trainee entity
+     */
+    Trainee copyTrainee(Trainee trainee);
 }

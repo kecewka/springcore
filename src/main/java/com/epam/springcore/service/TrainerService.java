@@ -4,7 +4,6 @@ import com.epam.springcore.dto.training.TrainerTrainingCriteriaDTO;
 import com.epam.springcore.entity.Trainer;
 import com.epam.springcore.entity.Training;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface TrainerService {
@@ -63,7 +62,7 @@ public interface TrainerService {
     /**
      * Retrieves the training list for a trainer based on username, training name, and date.
      *
-     * @param trainerTrainingCriteriaDTO The DTO containing criterias.
+     * @param trainerTrainingCriteriaDTO The DTO containing criteria.
      * @return A list of trainings that match the criteria.
      */
     List<Training> findTrainingByUsernameAndCriteria(TrainerTrainingCriteriaDTO trainerTrainingCriteriaDTO);
@@ -96,6 +95,14 @@ public interface TrainerService {
      * @return A list of not assigned and active trainers.
      */
     List<Trainer> getNotAssignedAndActiveTrainers();
+
+    /**
+     * Copies Trainer for create Response.
+     *
+     * @param trainer The Trainer entity to be copied.
+     * @return copied Trainer entity
+     */
+    Trainer copyTrainer(Trainer trainer);
 }
 
 

@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,14 +31,16 @@ public class TrainerServiceImpl implements TrainerService {
     private final TrainingRepository trainingRepository;
     private final TraineeRepository traineeRepository;
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
     private static final Logger LOGGER = LogManager.getLogger(TrainerServiceImpl.class);
 
     @Autowired
-    public TrainerServiceImpl(TrainerRepository trainerRepository, TrainingRepository trainingRepository, TraineeRepository traineeRepository, UserService userService) {
+    public TrainerServiceImpl(TrainerRepository trainerRepository, TrainingRepository trainingRepository, TraineeRepository traineeRepository, UserService userService, PasswordEncoder passwordEncoder) {
         this.trainerRepository = trainerRepository;
         this.trainingRepository = trainingRepository;
         this.traineeRepository = traineeRepository;
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -63,7 +66,11 @@ public class TrainerServiceImpl implements TrainerService {
         String transactionId = MDC.get("transactionId");
         LOGGER.info("[Transaction ID: {}] Creating trainer: {}", transactionId, trainer);
         userService.createUser(trainer.getUser());
-        return trainerRepository.save(trainer);
+        Trainer copyTrainer = copyTrainer(trainer);
+        String hashedPassword = passwordEncoder.encode(trainer.getUser().getPassword());
+        trainer.getUser().setPassword(hashedPassword);
+        trainerRepository.save(trainer);
+        return copyTrainer;
     }
 
     @Override
@@ -165,5 +172,15 @@ public class TrainerServiceImpl implements TrainerService {
         List<Trainer> list = trainerRepository.findAllActiveTrainersWithoutTrainees();
         System.out.println(list);
         return list;
+    }
+
+    @Override
+    public Trainer copyTrainer(Trainer trainer) {
+        User copyUser = new User();
+        copyUser.setUsername(trainer.getUser().getUsername());
+        copyUser.setPassword(trainer.getUser().getPassword());
+        Trainer copyTrainer = new Trainer();
+        copyTrainer.setUser(copyUser);
+        return copyTrainer;
     }
 }
