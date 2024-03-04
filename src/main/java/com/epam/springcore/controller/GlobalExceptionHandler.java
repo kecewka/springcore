@@ -69,4 +69,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(data, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<ReturnMessage> handleException(VerificationException exception) {
+        ReturnMessage data = new ReturnMessage();
+        data.setInfo(exception.getMessage());
+
+        return new ResponseEntity<>(data, HttpStatus.FORBIDDEN);
+    }
 }
