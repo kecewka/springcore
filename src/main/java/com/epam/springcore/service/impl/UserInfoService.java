@@ -17,7 +17,7 @@ public class UserInfoService implements UserDetailsService {
     @Autowired
     private UserRepository repository;
     @Autowired
-    private LoginAttemptService loginAttemptService;
+    private LoginAttemptServiceImpl loginAttemptService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

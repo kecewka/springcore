@@ -1,6 +1,7 @@
 package com.epam.springcore.service.impl;
 
 
+import com.epam.springcore.service.LoginAttemptService;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -10,12 +11,12 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class LoginAttemptService {
+public class LoginAttemptServiceImpl implements LoginAttemptService {
     public static final int MAX_ATTEMPT = 3;
     public static final int DURATION = 60;
     private final LoadingCache<String, Integer> attemptsCache;
 
-    public LoginAttemptService() {
+    public LoginAttemptServiceImpl() {
         attemptsCache = CacheBuilder
                 .newBuilder()
                 .expireAfterWrite(DURATION, TimeUnit.SECONDS)
@@ -28,6 +29,7 @@ public class LoginAttemptService {
 
     }
 
+    @Override
     public void loginFailed(String username) {
         int attempts;
         try {
@@ -39,6 +41,7 @@ public class LoginAttemptService {
         attemptsCache.put(username, attempts);
     }
 
+    @Override
     public boolean isBlocked(String username) {
         try {
             return attemptsCache.get(username) >= MAX_ATTEMPT;

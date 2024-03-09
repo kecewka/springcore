@@ -1,6 +1,6 @@
 package com.epam.springcore.listener;
 
-import com.epam.springcore.service.impl.LoginAttemptService;
+import com.epam.springcore.service.impl.LoginAttemptServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthenticationFailureListener implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {
 
-    private final LoginAttemptService loginAttemptService;
+    private final LoginAttemptServiceImpl loginAttemptService;
 
     @Autowired
-    public AuthenticationFailureListener(LoginAttemptService loginAttemptService) {
+    public AuthenticationFailureListener(LoginAttemptServiceImpl loginAttemptService) {
         this.loginAttemptService = loginAttemptService;
     }
 

@@ -1,6 +1,6 @@
 package com.epam.springcore.filter;
 
-import com.epam.springcore.service.impl.JwtService;
+import com.epam.springcore.service.JwtService;
 import com.epam.springcore.service.impl.UserInfoService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

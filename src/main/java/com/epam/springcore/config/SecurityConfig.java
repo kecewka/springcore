@@ -1,7 +1,7 @@
 package com.epam.springcore.config;
 
 import com.epam.springcore.filter.JwtAuthFilter;
-import com.epam.springcore.service.impl.JwtService;
+import com.epam.springcore.service.impl.JwtServiceImpl;
 import com.epam.springcore.service.impl.UserInfoService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +36,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/trainees", "/api/trainers", "/login").permitAll()
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(new JwtAuthFilter(new JwtService(), (UserInfoService) userDetailsService()), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthFilter(new JwtServiceImpl(), (UserInfoService) userDetailsService()), UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
     }

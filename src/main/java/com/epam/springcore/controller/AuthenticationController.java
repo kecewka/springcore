@@ -1,7 +1,7 @@
 package com.epam.springcore.controller;
 
 import com.epam.springcore.dto.user.UsernameAndPasswordDTO;
-import com.epam.springcore.service.impl.JwtService;
+import com.epam.springcore.service.JwtService;
 import com.epam.springcore.service.impl.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
