@@ -19,13 +19,13 @@ public class TransactionLoggingInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
-        LOGGER.info("Transaction Started - [{} {}] - Transaction ID: {}", request.getMethod(), request.getRequestURI(), transactionId);
+        LOGGER.info("[MAIN MICROSERVICE] Transaction Started - [{} {}] - Transaction ID: {}", request.getMethod(), request.getRequestURI(), transactionId);
         return true;
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        LOGGER.info("Transaction End - [{} {}] - Status: {} - Transaction ID: {}", request.getMethod(), request.getRequestURI(), response.getStatus(), MDC.get("transactionId"));
+        LOGGER.info("[MAIN MICROSERVICE] Transaction End - [{} {}] - Status: {} - Transaction ID: {}", request.getMethod(), request.getRequestURI(), response.getStatus(), MDC.get("transactionId"));
         MDC.clear();
     }
 }

@@ -76,4 +76,12 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(data, HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<ReturnMessage> handleException(ServiceNotAvailableException exception) {
+        ReturnMessage data = new ReturnMessage();
+        data.setInfo(exception.getMessage());
+
+        return new ResponseEntity<>(data, HttpStatus.SERVICE_UNAVAILABLE);
+    }
 }
