@@ -8,3 +8,5 @@
 - rest
 - boot
 - security
+- microservices
+- messaging
