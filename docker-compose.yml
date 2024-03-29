@@ -23,7 +23,7 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./prometheus:/prometheus
-#    networks:
+#   networks:
 #      monitoring:
 #        aliases:
 #          - prometheus

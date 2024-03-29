@@ -1,9 +1,7 @@
 package com.epam.springcore.config;
 
 import feign.RequestInterceptor;
-import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
