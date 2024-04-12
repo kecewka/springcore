@@ -18,7 +18,6 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class IntegrationSteps {
 
-    //@Value("${app.test.base-path}")
     private String basePath = "http://localhost:8123";
 
     @Autowired
