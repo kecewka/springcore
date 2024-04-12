@@ -8,5 +8,6 @@
 - rest
 - boot
 - security
-- microservices
+- microservices (nosql included here)
 - messaging
+- integration
