@@ -1,5 +1,6 @@
-# Use a base image with Java 11 installed
-FROM openjdk:22-ea-17-oracle
+# Use a base image with Java 17 installed
+#FROM openjdk:22-ea-17-oracle
+FROM openjdk:17-jdk-slim
 
 # Set the working directory in the container
 WORKDIR /app

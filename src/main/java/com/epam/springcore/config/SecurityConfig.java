@@ -1,5 +1,13 @@
 package com.epam.springcore.config;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+
 import com.epam.springcore.filter.JwtAuthFilter;
 import com.epam.springcore.service.impl.JwtServiceImpl;
 import com.epam.springcore.service.impl.UserInfoService;
@@ -26,20 +34,26 @@ import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig {
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests((requests) -> requests
+                       // .anyRequest().permitAll())
                         .requestMatchers(HttpMethod.POST, "/api/trainees", "/api/trainers", "/login").permitAll()
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(new JwtAuthFilter(new JwtServiceImpl(), (UserInfoService) userDetailsService()), UsernamePasswordAuthenticationFilter.class);
         return http.build();
-
+//
     }
+
+    @Bean
+    public PasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
@@ -68,10 +82,7 @@ public class SecurityConfig {
         return authenticationProvider;
     }
 
-    @Bean
-    public PasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
